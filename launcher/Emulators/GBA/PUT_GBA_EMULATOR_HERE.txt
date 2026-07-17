@@ -1,0 +1,8 @@
+Place one compatible portable executable here:
+
+  mGBA.exe
+  VisualBoyAdvance-M.exe
+  VisualBoyAdvance.exe
+
+The final Full releases will include an explicitly tested redistributable build
+and its license. The Core alpha does not silently download anything.
