@@ -2,50 +2,57 @@
 
 **Give an old computer another life.**
 
-Plugcade is a tiny, offline-first launcher for user-supplied DOS games, Game Boy Advance ROMs, and supported DOS CD-ROM images. Put it on a computer or USB drive, add your own files, and play without installation, an account, or an internet connection.
+Plugcade is a tiny, offline-first launcher for user-supplied classic computer and console games. Put it on a computer or USB drive, add your own files, and play without installation, an account, or a required internet connection.
 
-[**Open the Plugcade website**](https://rbt4.github.io/retrolauncherusb/) · [**Download Core 0.2 Alpha**](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.2-alpha.zip)
+[**Open the Plugcade website**](https://rbt4.github.io/retrolauncherusb/) · [**Download Core 0.3 Alpha**](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.3-alpha.zip) · [**Support it on Ko-fi**](https://ko-fi.com/rbt4dev)
 
-## Current status
+## Core 0.3 Alpha
 
-Core 0.2 Alpha is the first functional revival build. It includes:
-
-- a lightweight HTA/JScript graphical launcher;
-- a safe, non-destructive import flow;
-- obvious DOS, GBA, and CD-ROM drop folders;
-- library scanning and search;
-- DOS executable detection with per-game confirmation;
-- DOSBox/DOSBox-X and mGBA/VisualBoyAdvance adapters;
-- an emulator/system diagnostic;
+- default Kid Mode with large cover tiles and minimal controls;
+- arrow-key navigation, spoken game names through Windows speech when available, and local `help.txt` cards;
+- Grown-up Mode for importing, searching, diagnostics, and system selection;
+- 26 configurable adapters spanning DOS, Arcade/MAME, Nintendo, Sega, PlayStation 1, Atari, NEC, SNK, Bandai, Coleco, Intellivision, MSX, and Amiga;
+- an existing-collection importer that recognizes system-named folders without scanning the whole computer;
+- optional `cover.jpg`, `cover.png`, `cover.gif`, or `cover.bmp` artwork;
+- per-system emulator folders and plain-text `emulator.ini` launch arguments;
+- safe imports that copy content and never delete the originals;
 - a minimal batch fallback;
-- no bundled runtime and no network dependency.
+- no bundled games, emulator binaries, runtime, or required network service.
 
-The Core package does **not** bundle emulator binaries yet. Full releases will only bundle exact emulator versions after their licence, checksum, redistribution requirements, and advertised Windows compatibility are documented and tested.
+An enabled adapter is not a claim that every computer can emulate that system. Actual support depends on the Windows version, CPU/GPU, emulator build, drivers, and any legally required user-supplied BIOS.
 
 ## Quick start
 
-1. [Download the ZIP](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.2-alpha.zip).
+1. [Download Core 0.3 Alpha](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.3-alpha.zip).
 2. Extract it onto a computer or USB drive.
-3. Add a compatible portable DOS emulator to `Emulators\DOS`.
-4. Add a compatible portable GBA emulator to `Emulators\GBA`.
-5. Put legally obtained content into the matching `DROP_GAMES_HERE` folder.
-6. Run `START_PLUGCADE.bat` or open `Plugcade.hta`.
-7. Select **Import Games**.
+3. Open `Plugcade.hta` or `START_PLUGCADE.bat`.
+4. Switch to **Grown-up Mode** and choose the systems you need.
+5. Add compatible portable emulator executables to the matching `Emulators\SYSTEM` folders.
+6. Add legally obtained game files to `DROP_GAMES_HERE\SYSTEM`, or choose **Add Existing Collection**.
+7. Import, then return to Kid Mode.
 
-Import copies content into Plugcade's library. It does not delete the original files.
+See [the launcher guide](launcher/README.txt) and [platform adapter list](launcher/PLATFORMS.txt).
+
+## Kid Mode and Help Buddy
+
+Kid Mode is simple navigation, not a security boundary or replacement for Windows parental controls. The current help system is completely local.
+
+A future optional Gemini-based Help Buddy is a separate Standard-edition design track. It will not be enabled by default, continuously watch a screen, place an API key in the launcher, or silently upload a child's data. Read the [privacy-first AI helper design](docs/AI-HELPER-PRIVACY.md).
 
 ## Repository map
 
 - `launcher/` — current functional alpha source
 - `web/` — public GitHub Pages website
-- `docs/REVIVAL-ARCHITECTURE.md` — multi-edition design and safety rules
+- `docs/REVIVAL-ARCHITECTURE.md` — multi-edition architecture and safety rules
+- `docs/AI-HELPER-PRIVACY.md` — AI helper privacy gate
 - `legacy/launcher-v1.1-abandoned.bat` — preserved original script
-- `.github/workflows/pages.yml` — automatic website deployment
+- `.github/workflows/pages.yml` — automatic validation, packaging, checksum, and deployment
 
 ## Planned editions
 
 | Edition | Intended Windows hosts | Status |
 | --- | --- | --- |
+| Core | Varies by supplied emulator | 0.3 Alpha |
 | Standard | Windows 10/11 | Planned full package |
 | Classic | Windows 7/8.1 | Planned full package |
 | Legacy | XP/Vista/2000 32-bit | Research and testing |
@@ -58,10 +65,4 @@ No edition will claim operating-system support until it passes import, launch, r
 
 Plugcade contains no commercial games, ROMs, disc images, BIOS files, licence keys, or copy-protection bypasses. Users must provide content they are legally permitted to use.
 
-Initial CD-ROM support targets DOS CD games through a compatible DOS emulator. Native Windows CD games can require installation, drivers, registry changes, or game-specific patches and are not advertised as automatically supported.
-
-## Development
-
-The abandoned v1.1 batch launcher was intentionally not patched in place. Its duplicated launch paths, invalid batch syntax, unreliable executable guessing, online update assumptions, and emulator-specific command errors made a clean core safer and smaller.
-
-See [the revival architecture](docs/REVIVAL-ARCHITECTURE.md) for the current technical direction.
+The project is developed in public with AI-assisted implementation and human-directed product decisions. If it gives useful life to an old machine, [Ko-fi support](https://ko-fi.com/rbt4dev) helps fund testing hardware, hosting, and development tools—without popups or locked features.
