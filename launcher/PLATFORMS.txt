@@ -1,0 +1,29 @@
+PLUGCADE PLATFORM ADAPTERS
+==========================
+
+Enabled by default:
+DOS, DOS CD-ROM, Arcade/MAME, NES, SNES, Nintendo 64, Game Boy, Game Boy Color,
+Game Boy Advance, Genesis/Mega Drive, Master System, Game Gear, PC Engine,
+Atari 2600, and PlayStation 1.
+
+Optional adapters available from CHOOSE SYSTEMS:
+Virtual Boy, Sega 32X, Sega CD, Atari 7800, Atari Lynx, Neo Geo Pocket,
+WonderSwan, ColecoVision, Intellivision, MSX, and Commodore Amiga.
+
+Plugcade creates matching folders under:
+
+  DROP_GAMES_HERE\SYSTEM
+  Library\SYSTEM
+  Emulators\SYSTEM
+  Saves\SYSTEM
+
+Why adapters instead of one enormous emulator bundle?
+
+- Old computers need frozen emulator builds appropriate to their Windows and CPU.
+- Some emulators cannot legally or safely be redistributed as one package.
+- Some systems require a user-supplied BIOS.
+- A configurable adapter keeps the launcher and library portable and lightweight.
+
+The launcher does not promise that every enabled system will run on every PC.
+It provides the organization and launch wiring; the chosen emulator determines
+actual console compatibility and performance.
