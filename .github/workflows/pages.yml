@@ -2,7 +2,7 @@ name: Build and deploy Plugcade
 on:
   push:
     branches: [main]
-    paths: ["launcher/**", "web/**", ".github/workflows/pages.yml"]
+    paths: ["launcher/**", "tests/**", "web/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -28,22 +28,27 @@ jobs:
           node - <<'NODE'
           const fs = require("fs");
           const html = fs.readFileSync("launcher/Plugcade.hta", "utf8");
-          const script = html.match(/<script language="JScript">([\s\S]*?)<\/script>/i);
-          if (!script) throw new Error("Plugcade JScript block is missing");
-          new Function(script[1]);
+          const scripts = [...html.matchAll(/<script language="JScript">([\s\S]*?)<\/script>/ig)].map(match => match[1]);
+          if (!scripts.length) throw new Error("Plugcade JScript block is missing");
+          new Function(scripts.join("\n"));
           [
             "launcher/START_PLUGCADE.bat",
+            "launcher/START_WINDOWS_98_EXPERIMENTAL.BAT",
             "launcher/PLUGCADE-LITE.bat",
             "launcher/README.txt",
+            "launcher/CHANGELOG.txt",
             "launcher/PLATFORMS.txt",
-            "launcher/Config/ai-helper.example.ini"
+            "launcher/Config/ai-helper.example.ini",
+            "launcher/DROP_GAMES_HERE/_SMART_INBOX/README.txt",
+            "launcher/Emulators/README.txt"
           ].forEach((path) => {
             if (!fs.existsSync(path)) throw new Error(path + " is missing");
           });
-          const platformCount = (script[1].match(/P\("/g) || []).length;
+          const platformCount = (scripts.join("\n").match(/P\("/g) || []).length;
           if (platformCount < 26) throw new Error("Expected at least 26 platform adapters");
           console.log("Launcher source passed validation with " + platformCount + " adapters.");
           NODE
+          node tests/launcher-smoke.js
 
       - name: Build portable Core download
         run: |
@@ -55,8 +60,8 @@ jobs:
                   path.write_bytes(data)
           PY
           mkdir -p web/downloads
-          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.3-alpha.zip .)
-          (cd web/downloads && sha256sum Plugcade-Core-0.3-alpha.zip > Plugcade-Core-0.3-alpha.sha256.txt)
+          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.4-alpha.zip .)
+          (cd web/downloads && sha256sum Plugcade-Core-0.4-alpha.zip > Plugcade-Core-0.4-alpha.sha256.txt)
 
       - uses: actions/configure-pages@v5
 

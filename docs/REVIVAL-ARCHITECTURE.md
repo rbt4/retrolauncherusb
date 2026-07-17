@@ -3,7 +3,7 @@
 ## Product definition
 
 Plugcade is an offline-first, portable game launcher for user-supplied games from
-classic computers and consoles. Core 0.3 exposes 26 platform adapters while the
+classic computers and consoles. Core 0.4 exposes 26 platform adapters while the
 owner supplies emulator builds appropriate to the actual Windows version and
 hardware. It contains no commercial games, ROMs, disc images, BIOS files, or
 license keys.
@@ -35,12 +35,12 @@ PLUGCADE/
   DROP_GAMES_HERE/
     DOS/
     GBA/
-    CD-ROM/
+    CD/
     <enabled-platform>/
   Library/
     DOS/<game-id>/
     GBA/<game-id>/
-    CD-ROM/<game-id>/
+    CD/<game-id>/
   Emulators/
     DOS/
     GBA/
@@ -66,7 +66,7 @@ folders may use absolute paths but are clearly marked non-portable.
 
 Core keeps system support data-driven and lightweight. Each adapter defines an
 ID, display name, accepted extensions, library folder, emulator folder, save
-folder, visual symbol, and launch mode. Core 0.3 includes adapters for DOS, DOS
+folder, visual symbol, and launch mode. Core 0.4 includes adapters for DOS, DOS
 CD-ROM, Arcade/MAME, NES, SNES, Nintendo 64, Game Boy, Game Boy Color, Game Boy
 Advance, Virtual Boy, Genesis/Mega Drive, Master System, Game Gear, Sega 32X,
 Sega CD, PlayStation 1, PC Engine/TurboGrafx, Atari 2600, Atari 7800, Atari Lynx,
@@ -85,8 +85,10 @@ args="%ROM%"
 ```
 
 `%ROM%`, `%ROOT%`, and `%SAVES%` are expanded at launch. If no configuration is
-present, Core uses the first `.exe` in that system's emulator folder and passes
-the game path in quotes.
+present, Core searches two folders deep, excludes obvious installers/updaters,
+chooses the highest-scoring launcher, and passes the game path in quotes.
+
+Core 0.4 also expands `%GAME_SAVES%`, `%GAME_DIR%`, `%ID%`, and `%TITLE%`.
 
 ## Kid Mode
 
@@ -105,16 +107,17 @@ adult supervision where appropriate.
 1. Detect Windows version, CPU architecture, write access, available space, and
    USB filesystem.
 2. Create the shared folder layout.
-3. Offer three import modes:
+3. Offer these import modes:
    - **Portable Copy**: copy selected content into `Library`; originals remain.
    - **Use in Place**: index content where it already lives; no duplicate data.
-   - **Adopt**: move content into `Library` only after a preview and confirmation.
+   - **Adopt**: reserved for a future edition; Core 0.4 never moves source files.
 4. Accept content through:
    - the three `DROP_GAMES_HERE` folders;
    - a folder dragged onto the importer where supported;
    - paths explicitly added to `Config/sources.txt`;
    - a manually selected folder in GUI editions.
-5. Build an import plan before changing files.
+5. Build an import report before or while changing files and retain ambiguous
+   items for a grown-up decision.
 6. Group multi-file disc sets (`.cue` + `.bin`, `.ccd` + `.img` + `.sub`) as one
    title and prefer the descriptor file when launching.
 7. Copy or index, verify file count and size, then write `games.tsv` atomically.

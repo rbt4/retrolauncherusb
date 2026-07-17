@@ -2,7 +2,7 @@
 
 ## Current status
 
-Plugcade Core 0.3 does **not** watch the screen, record gameplay, connect to an
+Plugcade Core 0.4 does **not** watch the screen, record gameplay, connect to an
 AI service, or send data over the internet. Kid Mode uses local cover images,
 plain-text `help.txt` cards, keyboard navigation, and Windows speech when it is
 available.

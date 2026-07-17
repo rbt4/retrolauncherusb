@@ -23,6 +23,12 @@
   var downloadLink=document.querySelector(".download-action .button");
   var downloadMeta=document.getElementById("zipmeta");
   if(downloadLink&&downloadMeta){
+    if(window.fetch){
+      window.fetch(downloadLink.href,{method:"HEAD"}).then(function(response){
+        var bytes=parseInt(response.headers.get("content-length"),10);
+        if(response.ok&&bytes)downloadMeta.textContent=Math.ceil(bytes/1024)+" KB Core ZIP · games and emulators stay separate";
+      }).catch(function(){});
+    }
     downloadLink.addEventListener("click",function(){downloadMeta.textContent="Download started — extract it onto your USB";});
   }
 

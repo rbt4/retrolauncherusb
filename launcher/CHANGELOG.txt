@@ -1,0 +1,23 @@
+PLUGCADE CHANGELOG
+==================
+
+0.4 ALPHA
+---------
+- Added first-run grown-up setup assistant and simplified Setup & Tools panel.
+- Added startup auto-import and a conservative Smart Inbox.
+- Added safe copy and space-saving linked-collection modes.
+- Added nested emulator discovery with installer/updater exclusions.
+- Added stable portable game IDs and Config\games.tsv catalogue.
+- Added CUE/BIN, CCD/IMG/SUB and MDS/MDF grouping where supported.
+- Added stable per-game save folders and new emulator tokens.
+- Added writable DOS work copies and portable DOS CD C drives.
+- Added newest-three save backup rotation with a 256 MB automatic limit.
+- Added recent-launch history, import reports, diagnostics and plain-text logs.
+- Improved Kid Mode paging, visible selection and help-overlay keyboard handling.
+- Added a tiny experimental Windows 98/ME-compatible starter wrapper.
+- Kept the complete Core package under 24 KB compressed.
+
+0.3 ALPHA
+---------
+- Revived the framework-free HTA launcher with 26 platform adapters.
+- Added Kid Mode, speech, covers, offline help cards and safe basic importing.

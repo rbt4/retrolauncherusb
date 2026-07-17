@@ -56,7 +56,7 @@
     <div class="magic-grid">
       <article class="magic-card"><span class="magic-number">01</span><div><h3>Many formats. One shelf.</h3><p>Plugcade understands system-specific ROMs, zipped arcade sets, DOS folders and common disc-image formats instead of forcing everything into one file type.</p><small>Multi-file disc sets stay together; ambiguous files are not guessed silently.</small></div></article>
       <article class="magic-card"><span class="magic-number">02</span><div><h3>Move it without breaking it.</h3><p>Internal paths stay relative to the Plugcade folder. Put it on <code>E:</code> today and <code>G:</code> tomorrow—the portable library still knows where it lives.</p><small>Collections intentionally linked outside Plugcade are marked non-portable.</small></div></article>
-      <article class="magic-card"><span class="magic-number">03</span><div><h3>Your progress can travel too.</h3><p>Every enabled system gets a shared <code>Saves\SYSTEM</code> location. Compatible emulators can write progress there so it remains beside the library.</p><small><b>Honest boundary:</b> Core exposes the save path, but cannot force every emulator to support portable saves or timed autosave.</small></div></article>
+      <article class="magic-card"><span class="magic-number">03</span><div><h3>Your progress can travel too.</h3><p>Every title gets a stable <code>Saves\SYSTEM\GAME-ID</code> location. Core 0.4 can also make one dated save backup per day and keeps the newest three.</p><small><b>Honest boundary:</b> Plugcade exposes the save path, but cannot force every emulator to support portable saves or timed savestates.</small></div></article>
       <article class="magic-card"><span class="magic-number">04</span><div><h3>One library. Different runners.</h3><p>The folder layout stays familiar while each edition can use a launcher and emulator build appropriate to Windows 11, Windows 7, XP, Windows 98—or eventually native DOS.</p><small>Old hardware gets frozen, tested tools instead of a huge modern runtime.</small></div></article>
     </div>
   </section>
@@ -129,7 +129,7 @@
 
   <section id="versions" class="versions-section">
     <div class="versions-copy"><span class="eyebrow">ONE LIBRARY, MULTIPLE COMPUTER AGES</span><h2>“Old PC” is not one target.</h2><p>A Windows 11 desktop and a Windows 98 tower should not receive the same enormous package. Plugcade’s shared library structure stays familiar while each edition freezes the correct launcher and emulator generation.</p></div>
-    <div class="edition-callout"><strong>Available today:</strong><span>Core 0.3 Alpha is the bring-your-own-emulator foundation. The packaged editions below remain planned or experimental until they pass real hardware and virtual-machine tests.</span></div>
+    <div class="edition-callout"><strong>Available today:</strong><span>Core 0.4 Alpha is the tiny, automation-first, bring-your-own-emulator foundation. The packaged editions below remain planned or experimental until they pass real hardware and virtual-machine tests.</span></div>
     <div class="table-scroll" role="region" aria-label="Plugcade edition compatibility" tabindex="0"><table><thead><tr><th>Edition</th><th>Computer target</th><th>Purpose</th><th>Status</th></tr></thead><tbody>
       <tr><td><strong>Core</strong></td><td>Varies by emulator</td><td>Tiny shared launcher and portable folder structure</td><td><span class="research">ALPHA NOW</span></td></tr>
       <tr><td><strong>Standard</strong></td><td>Windows 10 / 11</td><td>Current tested portable emulator package</td><td><span class="planned">PLANNED</span></td></tr>
@@ -141,8 +141,8 @@
   </section>
 
   <section id="downloads" class="section downloads">
-    <div class="section-title"><span class="eyebrow">DOWNLOAD THE REAL LAUNCHER</span><h2>Start with Core 0.3 Alpha.</h2><p>This is the working foundation—not the browser demo. Extract it onto a computer or USB, then add the content and emulator builds appropriate to that machine.</p></div>
-    <div class="download-card featured"><div class="badge">AVAILABLE NOW</div><div><span class="version">0.3 ALPHA · CORE</span><h3>Plugcade Core</h3><p>Includes the portable folder builder, safe import, 26 platform adapters, Kid Mode, spoken names, cover art, offline help cards, diagnostics and a lightweight fallback.</p><div class="included-grid"><span><b>INCLUDED</b>Launcher + folders + adapters</span><span><b>YOU ADD</b>Games + BIOS + emulators</span></div></div><div class="download-action"><a class="button primary" href="downloads/Plugcade-Core-0.3-alpha.zip" download>↓ DOWNLOAD ZIP</a><small id="zipmeta">About 16 KB · games and emulators stay separate</small><a class="source" href="https://github.com/rbt4/retrolauncherusb/tree/main/launcher">Browse the source →</a></div></div>
+    <div class="section-title"><span class="eyebrow">DOWNLOAD THE REAL LAUNCHER</span><h2>Start with Core 0.4 Alpha.</h2><p>This is the working foundation—not the browser demo. Extract it onto a computer or USB, then add the content and emulator builds appropriate to that machine.</p></div>
+    <div class="download-card featured"><div class="badge">AVAILABLE NOW</div><div><span class="version">0.4 ALPHA · CORE</span><h3>Plugcade Core</h3><p>Includes Smart Inbox, safe startup importing, copy-or-link collections, nested emulator detection, multi-file disc grouping, per-game saves, backup rotation, 26 platform adapters, Kid Mode, spoken names, offline help cards, diagnostics and logs.</p><div class="included-grid"><span><b>INCLUDED</b>Launcher + folders + automation</span><span><b>YOU ADD</b>Games + BIOS + emulators</span></div></div><div class="download-action"><a class="button primary" href="downloads/Plugcade-Core-0.4-alpha.zip" download>↓ DOWNLOAD ZIP</a><small id="zipmeta">About 23 KB · games and emulators stay separate</small><a class="source" href="downloads/Plugcade-Core-0.4-alpha.sha256.txt">Verify SHA-256 →</a><a class="source" href="https://github.com/rbt4/retrolauncherusb/tree/main/launcher">Browse the source →</a></div></div>
     <div class="download-warning"><strong>Alpha means test first.</strong><span>Do not make this the only copy of your library or saves. Real Windows-version and emulator compatibility testing is still underway.</span></div>
   </section>
 
@@ -152,6 +152,6 @@
 </main>
 
 <footer><div class="brand invert"><b>P</b><span>PLUGCADE<small>LET OLD COMPUTERS PLAY.</small></span></div><p>Open-source. Offline-first. AI-assisted. Human-directed.</p><div><a href="https://ko-fi.com/rbt4dev">Ko-fi</a> · <a href="https://github.com/rbt4/retrolauncherusb">GitHub repository ↗</a></div></footer>
-<script src="app.js?v=0.5.0"></script>
+<script src="app.js?v=0.5.1"></script>
 </body>
 </html>
