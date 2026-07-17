@@ -80,7 +80,7 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:4px solid 
 .hero .usb:after{content:"";position:absolute;right:-58px;width:58px;height:48px;background:linear-gradient(#d9dde1 0 22%,#aeb5bc 23% 78%,#e6eaed 79%);border:4px solid var(--ink);border-left:0;border-radius:0 7px 7px 0;box-shadow:inset -8px 0 #8d969e}
 .hero .usb:before{content:"•  •";position:absolute;right:-48px;z-index:2;top:24px;color:#616870;font:16px "Space Mono";letter-spacing:7px}
 .pcd-off-view small{color:#aaa2b8;font:700 9px "Press Start 2P";animation:pcdBlink 1.2s steps(2,end) infinite}
-.pcd-library-view{justify-content:flex-start;gap:13px;padding:65px 16px 15px}
+.pcd-library-view{justify-content:center;gap:13px;padding:65px 16px 15px}
 .pcd-library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;width:100%}
 .pcd-library-tile{min-width:0;padding:7px;background:#fffaf0;color:var(--ink);border:3px solid #777084;border-radius:5px;box-shadow:3px 3px 0 #080611;cursor:pointer;font-family:"Press Start 2P";text-align:left;transition:transform .12s,border-color .12s,box-shadow .12s;touch-action:manipulation}
 .pcd-library-tile:hover{transform:translateY(-2px);border-color:#ddd3c1}
@@ -103,6 +103,8 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:4px solid 
 .pcd-library-help{color:#aaa2b8;font:700 8px "Space Mono"}
 .pcd-game-hud{align-items:center}
 .pcd-game-name{max-width:170px;overflow:hidden;text-overflow:ellipsis;color:var(--yellow);white-space:nowrap}
+.pcd-game-exit{width:28px;height:26px;display:grid;place-items:center;flex:none;padding:0;background:#3b344c;color:#fff;border:1px solid #716a7e;border-radius:4px;font:18px/1 "Space Mono";cursor:pointer}
+.pcd-game-exit:hover{background:var(--orange);border-color:var(--orange)}
 .pcd-usb-dock{position:relative;width:min(100%,500px);height:94px;margin:31px auto 0;filter:drop-shadow(5px 6px 0 #100d19)}
 .pcd-usb-stick{position:absolute;left:0;top:5px;z-index:3;width:202px;height:56px;display:flex;align-items:stretch;padding:0;border:0;background:transparent;color:var(--ink);cursor:pointer;transition:left .65s cubic-bezier(.2,.82,.2,1),transform .18s;touch-action:manipulation}
 .pcd-usb-stick:hover{transform:translateY(-3px)}
