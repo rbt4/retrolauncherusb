@@ -9,7 +9,7 @@ html,body{margin:0;padding:0;background:#fff4df;color:#211a37;font-family:Verdan
 </style>
 <script language="JScript">
 var fso=new ActiveXObject("Scripting.FileSystemObject"),shell=new ActiveXObject("WScript.Shell");
-var root="",current="ALL",kidMode=true,games=[],visibleGames=[],selected=0,enabled="";
+var root="",current="ALL",kidMode=true,games=[],visibleGames=[],selected=0,enabled="",voice=null;
 function P(id,name,exts,kind,symbol,color,aliases){return{id:id,name:name,exts:exts,kind:kind,symbol:symbol,color:color,aliases:aliases};}
 var platforms=[
 P("DOS","DOS","","dos","PC","#1677d2","DOSGAMES"),P("CD","DOS CD-ROM","cue,iso","doscd","CD","#6659a7","CDROM,DOSCD"),P("ARCADE","Arcade / MAME","zip","rom","A","#ed5a2a","MAME,ARCADEGAMES"),
@@ -53,7 +53,7 @@ function render(){var h="",term=kidMode?"":document.getElementById("find").value
 function changeFilter(){current=document.getElementById("platformFilter").value;render();}
 function paintSelected(){for(var i=0;i<visibleGames.length;i++){var c=document.getElementById("card"+visibleGames[i]);if(c)c.className="card"+(i==selected?" selected":"");}}
 function keyNav(){if(!kidMode||!visibleGames.length)return;var e=window.event,k=e.keyCode;if(k==37||k==38){selected--;if(selected<0)selected=visibleGames.length-1;paintSelected();e.returnValue=false;}else if(k==39||k==40){selected++;if(selected>=visibleGames.length)selected=0;paintSelected();e.returnValue=false;}else if(k==13){play(visibleGames[selected]);e.returnValue=false;}else if(k==32){speakGame(visibleGames[selected]);e.returnValue=false;}else if(k==72){helpGame(visibleGames[selected]);e.returnValue=false;}}
-function speak(text){try{var v=new ActiveXObject("SAPI.SpVoice");v.Speak(text,1);return true;}catch(e){return false;}}
+function speak(text){try{if(!voice)voice=new ActiveXObject("SAPI.SpVoice");voice.Speak(text,1);return true;}catch(e){return false;}}
 function speakGame(i){var g=games[i],p=platform(g.platform);if(!speak("Play "+g.title+". "+p.name+"."))alert(g.title+"\n"+p.name+"\n\nSpeech is not installed on this Windows computer.");}
 function helpGame(i){var g=games[i],path=g.dir+"\\help.txt",text="No help card has been added for this game yet. Ask a grown-up for help.";if(fso.FileExists(path)){var t=fso.OpenTextFile(path,1,false);text=t.ReadAll();t.Close();}document.getElementById("helpTitle").innerText=g.title+" - Help";document.getElementById("helpText").innerText=text;document.getElementById("overlay").style.display="block";speak(text.substr(0,700));}
 function closeHelp(){document.getElementById("overlay").style.display="none";}
