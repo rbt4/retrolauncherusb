@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ff522e"><meta name="description" content="Plugcade — your portable retro arcade.">
+  <title>Plugcade — Your Arcade. Anywhere.</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="app-shell">
+  <header class="topbar">
+    <button class="brand" data-action="home"><span class="brand-pixel">P</span><span><strong>PLUGCADE</strong><small>YOUR ARCADE. ANYWHERE.</small></span></button>
+    <label class="search"><span>⌕</span><input id="search" placeholder="Find a game..." autocomplete="off"><kbd>/</kbd></label>
+    <div class="drive-status"><i></i><span>♆</span><span><strong>ARCADE USB</strong><small>32.4 GB FREE</small></span></div>
+    <button class="icon-button" data-action="settings" aria-label="Open settings">⚙</button>
+  </header>
+  <section class="hero-strip"><div><span class="eyebrow">PLAYER 1 READY</span><h1>Your games.<br><em>Your rules.</em></h1><p>Pick a classic and jump straight back in. Your saves are safe.</p></div><div class="hero-console"><span class="screen"><b>42</b><small>GAMES</small></span><span class="dpad">+</span><span class="button-a">A</span><span class="button-b">B</span></div></section>
+  <section class="library-head"><div><span class="section-kicker">GAME LIBRARY</span><h2>Pick your next adventure</h2></div><label class="sort-label">SORT <select id="sort"><option value="recent">Recently played</option><option value="az">A to Z</option><option value="played">Most played</option></select></label></section>
+  <nav class="filters" id="filters" aria-label="Filter games"></nav><section class="game-grid" id="grid" aria-live="polite"></section>
+  <footer><span>✓ All saves backed up</span><p>42 games · 3 systems · Plug in. Play on.</p><span>v2.0</span></footer>
+</main>
+<div id="modal"></div><div id="toast"></div><script src="app.js"></script>
+</body></html>
