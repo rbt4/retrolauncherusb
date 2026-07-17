@@ -1,82 +1,67 @@
-# Ultimate Kids Game Launcher
+# Plugcade
 
-## Overview
+**Give an old computer another life.**
 
-Ultimate Kids Game Launcher is a portable, full-featured game launcher for DOS, GBA, and CD-ROM games that runs directly from USB drives with no installation required. Perfect for preserving classic games and creating a kid-friendly interface to access your retro game collection.
+Plugcade is a tiny, offline-first launcher for user-supplied DOS games, Game Boy Advance ROMs, and supported DOS CD-ROM images. Put it on a computer or USB drive, add your own files, and play without installation, an account, or an internet connection.
 
-## Key Features
+[**Open the Plugcade website**](https://rbt4.github.io/retrolauncherusb/) · [**Download Core 0.2 Alpha**](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.2-alpha.zip)
 
-- **Portable & No Installation**: Runs entirely from USB drive with no installation required
-- **Multi-Platform Support**: Plays DOS, GBA, and CD-ROM games through emulators
-- **Auto-Save System**: Automatically creates save states for games
-- **ZIP Support**: Directly extracts and plays games from ZIP archives
-- **Controller Support**: Map modern controllers to classic games
-- **Game Statistics**: Tracks playtime and maintains favorites
-- **Backup System**: Creates and restores backups of save states
-- **User-Friendly Interface**: Simple menu system that kids can navigate
+## Current status
 
-## Requirements
+Core 0.2 Alpha is the first functional revival build. It includes:
 
-- Windows 7 or newer
-- DOSBox-X for DOS and CD-ROM games (place in `emulators` folder)
-- GBA emulator like mGBA or VisualBoyAdvance (place in `emulators` folder)
-- Optional: 7-Zip for enhanced ZIP support (place 7z.exe in `emulators` folder)
-- Optional: JoyToKey for controller support (place in `tools/JoyToKey` folder)
+- a lightweight HTA/JScript graphical launcher;
+- a safe, non-destructive import flow;
+- obvious DOS, GBA, and CD-ROM drop folders;
+- library scanning and search;
+- DOS executable detection with per-game confirmation;
+- DOSBox/DOSBox-X and mGBA/VisualBoyAdvance adapters;
+- an emulator/system diagnostic;
+- a minimal batch fallback;
+- no bundled runtime and no network dependency.
 
-## Setup Instructions
+The Core package does **not** bundle emulator binaries yet. Full releases will only bundle exact emulator versions after their licence, checksum, redistribution requirements, and advertised Windows compatibility are documented and tested.
 
-1. **Download** the launcher and extract to a USB drive or folder
-2. **Create folders** (the launcher will create these automatically on first run):
-   - `games` - Place DOS games here
-   - `gba` - Place GBA ROMs here
-   - `iso` - Place CD-ROM images (ISO, BIN, CUE) here
-   - `emulators` - Place DOSBox-X and GBA emulators here
-   - `tools` - Place JoyToKey here (optional)
-3. **Launch** by running `launcher.bat`
+## Quick start
 
-## Directory Structure
+1. [Download the ZIP](https://rbt4.github.io/retrolauncherusb/downloads/Plugcade-Core-0.2-alpha.zip).
+2. Extract it onto a computer or USB drive.
+3. Add a compatible portable DOS emulator to `Emulators\DOS`.
+4. Add a compatible portable GBA emulator to `Emulators\GBA`.
+5. Put legally obtained content into the matching `DROP_GAMES_HERE` folder.
+6. Run `START_PLUGCADE.bat` or open `Plugcade.hta`.
+7. Select **Import Games**.
 
-```
-Ultimate Kids Game Launcher/
-├── launcher.bat       - Main launcher script
-├── games/             - DOS games (EXE, COM, BAT, ZIP)
-├── gba/               - GBA ROMs (GBA, ZIP)
-├── iso/               - CD-ROM images (ISO, BIN, CUE)
-├── emulators/         - Emulators (DOSBox-X, mGBA, etc.)
-├── saves/             - Auto-generated save files
-│   ├── dos/           - DOS game saves
-│   └── gba/           - GBA game saves
-├── tools/             - Additional utilities
-│   └── JoyToKey/      - Controller mapping tool
-├── backups/           - Auto-generated backups
-├── cache/             - Performance cache files
-├── logs/              - Error and activity logs
-└── temp/              - Temporary extraction directory
-```
+Import copies content into Plugcade's library. It does not delete the original files.
 
-## Controller Setup
+## Repository map
 
-For controller support:
-1. Download JoyToKey from [joytokey.net](https://joytokey.net/en/download)
-2. Extract to `tools/JoyToKey` folder
-3. Use the Controller Setup menu to configure mappings
+- `launcher/` — current functional alpha source
+- `web/` — public GitHub Pages website
+- `docs/REVIVAL-ARCHITECTURE.md` — multi-edition design and safety rules
+- `legacy/launcher-v1.1-abandoned.bat` — preserved original script
+- `.github/workflows/pages.yml` — automatic website deployment
 
-## Recommended Emulators
+## Planned editions
 
-- **DOS & CD-ROM**: [DOSBox-X](https://dosbox-x.com/) - More features than standard DOSBox
-- **GBA**: [mGBA](https://mgba.io/) - Best accuracy and performance
+| Edition | Intended Windows hosts | Status |
+| --- | --- | --- |
+| Standard | Windows 10/11 | Planned full package |
+| Classic | Windows 7/8.1 | Planned full package |
+| Legacy | XP/Vista/2000 32-bit | Research and testing |
+| Retro | Windows 98/ME/NT4 | Experimental research |
+| DOS Boot | Bootable FreeDOS-capable PCs | Future research |
 
-## Known Issues
+No edition will claim operating-system support until it passes import, launch, return, and save-preservation tests on representative hardware or a virtual machine.
 
-- Very long file paths (>240 characters) may cause issues
-- Some special characters in filenames might need to be avoided
-- Certain ZIP compression methods may not extract properly
+## Content and licensing
 
-## Credits
+Plugcade contains no commercial games, ROMs, disc images, BIOS files, licence keys, or copy-protection bypasses. Users must provide content they are legally permitted to use.
 
-- Developed by: [rbt4](https://github.com/rbt4/launcher)
-- Inspired by classic game frontends and kid-friendly interfaces
+Initial CD-ROM support targets DOS CD games through a compatible DOS emulator. Native Windows CD games can require installation, drivers, registry changes, or game-specific patches and are not advertised as automatically supported.
 
-## License
+## Development
 
-This project is provided as open-source software. Feel free to modify and distribute according to your needs.
+The abandoned v1.1 batch launcher was intentionally not patched in place. Its duplicated launch paths, invalid batch syntax, unreliable executable guessing, online update assumptions, and emulator-specific command errors made a clean core safer and smaller.
+
+See [the revival architecture](docs/REVIVAL-ARCHITECTURE.md) for the current technical direction.
