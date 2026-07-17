@@ -377,13 +377,17 @@
     function off(){if(direction<0)moveLeft=false;else moveRight=false;}
     button.addEventListener("pointerdown",on);button.addEventListener("pointerup",off);button.addEventListener("pointercancel",off);button.addEventListener("pointerleave",off);
   }
+  function showLibrary(){
+    running=false;window.cancelAnimationFrame(raf);gameView.classList.remove("is-over");setState("library");selectGame(selectedGame,true);
+  }
 
   usbButton.addEventListener("click",boot);
   root.querySelector(".pcd-play").addEventListener("click",resetGame);
   root.querySelector(".pcd-prev").addEventListener("click",function(){selectGame(selectedGame-1,true);});
   root.querySelector(".pcd-next").addEventListener("click",function(){selectGame(selectedGame+1,true);});
   root.querySelector(".pcd-again").addEventListener("click",resetGame);
-  root.querySelector(".pcd-library").addEventListener("click",function(){running=false;window.cancelAnimationFrame(raf);setState("library");selectGame(selectedGame,true);});
+  root.querySelector(".pcd-library").addEventListener("click",showLibrary);
+  root.querySelector(".pcd-game-exit").addEventListener("click",showLibrary);
   for(var tileIndex=0;tileIndex<tiles.length;tileIndex++){
     (function(index){tiles[index].addEventListener("click",function(){selectGame(index,false);});})(tileIndex);
   }
@@ -401,6 +405,7 @@
       else if(event.key==="ArrowDown"){selectGame(selectedGame+2,true);event.preventDefault();}
       else if(event.key==="Enter"&&event.target.classList.contains("pcd-library-tile")){resetGame();event.preventDefault();}
     }else if(running){
+      if(event.key==="Escape"){showLibrary();event.preventDefault();return;}
       if(event.key==="ArrowLeft"){moveLeft=true;event.preventDefault();}
       if(event.key==="ArrowRight"){moveRight=true;event.preventDefault();}
     }
