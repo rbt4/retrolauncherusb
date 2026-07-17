@@ -34,11 +34,15 @@ jobs:
           [
             "launcher/START_PLUGCADE.bat",
             "launcher/PLUGCADE-LITE.bat",
-            "launcher/README.txt"
+            "launcher/README.txt",
+            "launcher/PLATFORMS.txt",
+            "launcher/Config/ai-helper.example.ini"
           ].forEach((path) => {
             if (!fs.existsSync(path)) throw new Error(path + " is missing");
           });
-          console.log("Launcher source passed validation.");
+          const platformCount = (script[1].match(/P\("/g) || []).length;
+          if (platformCount < 26) throw new Error("Expected at least 26 platform adapters");
+          console.log("Launcher source passed validation with " + platformCount + " adapters.");
           NODE
 
       - name: Build portable Core download
@@ -51,8 +55,8 @@ jobs:
                   path.write_bytes(data)
           PY
           mkdir -p web/downloads
-          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.2-alpha.zip .)
-          (cd web/downloads && sha256sum Plugcade-Core-0.2-alpha.zip > Plugcade-Core-0.2-alpha.sha256.txt)
+          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.3-alpha.zip .)
+          (cd web/downloads && sha256sum Plugcade-Core-0.3-alpha.zip > Plugcade-Core-0.3-alpha.sha256.txt)
 
       - uses: actions/configure-pages@v5
 
