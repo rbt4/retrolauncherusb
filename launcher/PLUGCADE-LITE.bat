@@ -1,38 +1,43 @@
 @echo off
 setlocal EnableExtensions DisableDelayedExpansion
 cd /d "%~dp0"
-for %%D in ("DROP_GAMES_HERE" "DROP_GAMES_HERE\DOS" "DROP_GAMES_HERE\GBA" "DROP_GAMES_HERE\CD-ROM" "Library" "Library\DOS" "Library\GBA" "Library\CD-ROM" "Emulators" "Emulators\DOS" "Emulators\GBA" "Saves" "Backups" "Config" "Cache" "Logs") do if not exist "%%~D" md "%%~D"
+for %%D in ("DROP_GAMES_HERE" "Library" "Emulators" "Saves" "Backups" "Config" "Cache" "Logs") do if not exist "%%~D" md "%%~D"
+
 :MENU
 cls
 echo ========================================================
 echo                    P L U G C A D E
-echo              YOUR ARCADE. ANYWHERE.
+echo                LIGHTWEIGHT FALLBACK
 echo ========================================================
 echo.
-echo  1. Open DOS library
-echo  2. Open GBA library
-echo  3. Open CD-ROM library
-echo  4. Open DROP_GAMES_HERE
-echo  5. System check
+echo  1. Open game library
+echo  2. Open DROP_GAMES_HERE
+echo  3. Open emulator folders
+echo  4. Read setup guide
+echo  5. Basic system check
 echo  0. Exit
 echo.
 set "pick="
 set /p "pick=Choose: "
-if "%pick%"=="1" start "DOS games" explorer.exe "%CD%\Library\DOS"
-if "%pick%"=="2" start "GBA games" explorer.exe "%CD%\Library\GBA"
-if "%pick%"=="3" start "CD-ROM games" explorer.exe "%CD%\Library\CD-ROM"
-if "%pick%"=="4" start "Drop games" explorer.exe "%CD%\DROP_GAMES_HERE"
+if "%pick%"=="1" start "Game library" explorer.exe "%CD%\Library"
+if "%pick%"=="2" start "Drop games" explorer.exe "%CD%\DROP_GAMES_HERE"
+if "%pick%"=="3" start "Emulators" explorer.exe "%CD%\Emulators"
+if "%pick%"=="4" start "Plugcade guide" notepad.exe "%CD%\README.txt"
 if "%pick%"=="5" goto CHECK
 if "%pick%"=="0" exit /b 0
 goto MENU
+
 :CHECK
 cls
-echo SYSTEM CHECK
-echo ------------
-if exist "Emulators\DOS\dosbox-x.exe" (echo [OK] DOSBox-X) else if exist "Emulators\DOS\dosbox.exe" (echo [OK] DOSBox) else (echo [MISSING] DOS emulator)
-if exist "Emulators\GBA\mGBA.exe" (echo [OK] mGBA) else if exist "Emulators\GBA\VisualBoyAdvance.exe" (echo [OK] VisualBoyAdvance) else (echo [MISSING] GBA emulator)
+echo BASIC SYSTEM CHECK
+echo ------------------
+if exist "Plugcade.hta" (echo [OK] Graphical launcher) else (echo [MISSING] Plugcade.hta)
+if exist "Config\settings.ini" (echo [OK] Plugcade has completed first run) else (echo [INFO] Run Plugcade.hta once to create enabled system folders)
 echo.
-echo This fallback intentionally provides safe folder access only.
-echo Double-click Plugcade.hta for the full launcher.
+echo Emulator folders containing EXE files:
+for /d %%S in ("Emulators\*") do if exist "%%~fS\*.exe" echo [READY] %%~nxS
+echo.
+echo This fallback provides safe folder access when the graphical launcher
+echo cannot start. It does not launch games itself.
 pause
 goto MENU
