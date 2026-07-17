@@ -7,25 +7,66 @@
   <meta name="description" content="Plugcade turns an old Windows computer into a portable, kid-friendly offline retro arcade.">
   <title>Plugcade — Let old computers play</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="refine.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header>
   <a class="brand" href="#top"><b>P</b><span>PLUGCADE<small>YOUR ARCADE. ANYWHERE.</small></span></a>
-  <nav><a href="#kidmode">Kid Mode</a><a href="#systems">Systems</a><a href="#downloads">Download</a><a href="#support">Support</a><a class="tiny" href="https://ko-fi.com/rbt4dev">KO-FI +</a></nav>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span aria-hidden="true">☰</span><span>Menu</span></button>
+  <nav id="site-nav" class="site-nav"><a href="#play-live">Play demo</a><a href="#kidmode">Kid Mode</a><a href="#systems">Systems</a><a href="#downloads">Download</a><a href="#support">Support</a><a class="tiny" href="https://ko-fi.com/rbt4dev">KO-FI +</a></nav>
 </header>
-<main id="top">
+<main id="main-content">
+  <span id="top" class="anchor-target" aria-hidden="true"></span>
   <section class="hero">
     <div class="hero-copy">
       <span class="eyebrow">OLD PC. NEW HIGH SCORE.</span>
       <h1>Give that old computer <em>another life.</em></h1>
       <p>Plugcade is a tiny, offline game launcher built for computers the modern web left behind—and simple enough for a child to explore.</p>
-      <div class="buttons"><a class="button primary" href="#downloads">↓ DOWNLOAD 0.3 ALPHA</a><a class="button secondary" href="#demo">SEE IT WORK →</a></div>
+      <div class="buttons"><a class="button primary" href="#downloads">↓ DOWNLOAD 0.3 ALPHA</a><a class="button secondary" href="#play-live">PLAY THE LIVE DEMO →</a></div>
       <div class="trust"><span>✓ Kid Mode default</span><span>✓ No internet</span><span>✓ No account</span></div>
     </div>
     <div class="usb-scene" aria-label="Illustration of a Plugcade USB stick and old computer"><div class="monitor"><div class="screen"><i>PLAYER 1 READY</i><strong>PLUGCADE</strong><span>▶ PICK A GAME</span></div><div class="stand"></div></div><div class="usb"><b>P</b><span>PLUGCADE</span></div></div>
   </section>
 
   <section class="ticker"><span>26 SYSTEM ADAPTERS</span><i>◆</i><span>KID MODE</span><i>◆</i><span>SPOKEN NAMES</span><i>◆</i><span>PORTABLE</span><i>◆</i><span>OFFLINE</span></section>
+
+  <section id="play-live" class="live-arcade">
+    <div class="live-copy">
+      <span class="eyebrow">DON'T JUST WATCH</span>
+      <h2>Wake up the old computer.</h2>
+      <p>Insert the Plugcade USB, watch it boot into Kid Mode, then play an original 20-second arcade game—right here in the page.</p>
+      <div class="live-points"><span><b>1</b> Insert USB</span><span><b>2</b> Boot Kid Mode</span><span><b>3</b> Catch stars</span></div>
+      <small>This browser micro-demo recreates the feeling of Plugcade. The downloadable Windows launcher remains completely offline.</small>
+    </div>
+    <div id="plugcade-live-demo" class="pcd-demo" aria-label="Interactive Plugcade boot and arcade demo">
+      <div class="pcd-machine">
+        <div class="pcd-screen-shell">
+          <div class="pcd-screen" data-state="off">
+            <div class="pcd-scanlines" aria-hidden="true"></div>
+            <div class="pcd-off-view">
+              <span>OLD COMPUTER</span><strong>NO SIGNAL</strong>
+              <button type="button" class="pcd-button pcd-insert">INSERT PLUGCADE USB</button>
+            </div>
+            <div class="pcd-boot-view" aria-live="polite"><strong>PLUGCADE</strong><div class="pcd-boot-log"></div><div class="pcd-boot-bar"><i></i></div></div>
+            <div class="pcd-library-view">
+              <div class="pcd-library-top"><strong>KID MODE</strong><span>1 GAME READY</span></div>
+              <div class="pcd-game-tile" aria-label="Star Catcher selected"><span class="pcd-cover" aria-hidden="true">★</span><span>STAR CATCHER</span></div>
+              <button type="button" class="pcd-button pcd-play">PLAY</button>
+            </div>
+            <div class="pcd-game-view">
+              <div class="pcd-game-hud"><span>STARS <b class="pcd-score">0</b></span><span>TIME <b class="pcd-time">20</b></span><span>LIVES <b class="pcd-lives">3</b></span></div>
+              <canvas class="pcd-canvas" width="640" height="360" role="img" aria-label="Star Catcher game. Move the ship to catch yellow stars and avoid red glitches."></canvas>
+              <div class="pcd-touch-controls" aria-label="Game controls"><button type="button" class="pcd-control pcd-left" aria-label="Move left">← LEFT</button><button type="button" class="pcd-control pcd-right" aria-label="Move right">RIGHT →</button></div>
+              <div class="pcd-game-over" aria-live="polite"><strong class="pcd-result">ARCADE COMPLETE</strong><span class="pcd-final-score"></span><div><button type="button" class="pcd-button pcd-again">PLAY AGAIN</button><button type="button" class="pcd-button secondary pcd-library">LIBRARY</button></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="pcd-machine-foot" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="pcd-status"><span>KEYBOARD: ← →</span><span>TOUCH: BUTTONS BELOW GAME</span></div>
+    </div>
+  </section>
 
   <section id="demo" class="section">
     <div class="section-title"><span class="eyebrow">SEE IT IN ACTION</span><h2>From scattered files to arcade night.</h2><p>The workflow stays simple even when the collection is not: choose systems, import safely, then play.</p></div>
@@ -38,7 +79,7 @@
 
   <section id="kidmode" class="family">
     <div class="family-copy"><span class="eyebrow">KID MODE IS THE DEFAULT</span><h2>Big pictures. Tiny decisions.</h2><p>Setup controls disappear. Children choose a large cover tile, press Play, hear a game name when Windows speech is available, or open a simple offline help card.</p><ul><li>Arrow keys choose; Enter plays</li><li>Space says the game name</li><li>H opens a parent-written <code>help.txt</code></li><li>No store, account, chat or delete buttons</li></ul><small>Kid Mode simplifies navigation; it is not a replacement for Windows parental controls or grown-up supervision.</small></div>
-    <div class="kid-console" aria-label="Kid Mode interface example"><div class="kid-top">CHOOSE A GAME</div><div class="kid-cards"><div><b>M</b><span>MARIO</span></div><div class="chosen"><b>S</b><span>SONIC</span></div><div><b>K</b><span>KIRBY</span></div></div><div class="kid-actions"><b>← → CHOOSE</b><b>ENTER PLAY</b><b>SPACE SAY</b></div></div>
+    <div class="kid-console" aria-label="Kid Mode interface example"><div class="kid-top">CHOOSE A GAME</div><div class="kid-cards"><div><b>M</b><span>MOON HOPPER</span></div><div class="chosen"><b>S</b><span>STAR CATCHER</span></div><div><b>R</b><span>ROCKET RUN</span></div></div><div class="kid-actions"><b>← → CHOOSE</b><b>ENTER PLAY</b><b>SPACE SAY</b></div></div>
   </section>
 
   <section id="systems" class="section systems">
@@ -63,7 +104,7 @@
     <div class="coming"><article><span>COMING NEXT</span><h3>Standard Full</h3><p>Windows 10/11 package with tested redistributable emulators.</p></article><article><span>COMING NEXT</span><h3>Classic Full</h3><p>Frozen Windows 7/8.1-compatible emulator package.</p></article><article><span>RESEARCH TRACK</span><h3>Legacy & Retro</h3><p>XP/Vista/2000 and experimental Windows 98/ME editions.</p></article></div>
   </section>
 
-  <section id="compatibility" class="compat"><div><span class="eyebrow">CHOOSE HONESTLY</span><h2>Old means different things.</h2><p>A single “works everywhere” emulator bundle would be a lie. Plugcade editions freeze the correct launcher and emulator combination for each Windows generation.</p></div><table><thead><tr><th>Edition</th><th>Windows</th><th>Status</th></tr></thead><tbody><tr><td>Core</td><td>Varies by emulator</td><td><span class="research">ALPHA</span></td></tr><tr><td>Standard</td><td>10 / 11</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Classic</td><td>7 / 8.1</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Legacy</td><td>XP / Vista / 2000</td><td><span class="research">TESTING</span></td></tr><tr><td>Retro</td><td>98 / ME / NT4</td><td><span class="research">EXPERIMENTAL</span></td></tr></tbody></table></section>
+  <section id="compatibility" class="compat"><div><span class="eyebrow">CHOOSE HONESTLY</span><h2>Old means different things.</h2><p>A single “works everywhere” emulator bundle would be a lie. Plugcade editions freeze the correct launcher and emulator combination for each Windows generation.</p></div><div class="table-scroll" role="region" aria-label="Plugcade edition compatibility" tabindex="0"><table><thead><tr><th>Edition</th><th>Windows</th><th>Status</th></tr></thead><tbody><tr><td>Core</td><td>Varies by emulator</td><td><span class="research">ALPHA</span></td></tr><tr><td>Standard</td><td>10 / 11</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Classic</td><td>7 / 8.1</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Legacy</td><td>XP / Vista / 2000</td><td><span class="research">TESTING</span></td></tr><tr><td>Retro</td><td>98 / ME / NT4</td><td><span class="research">EXPERIMENTAL</span></td></tr></tbody></table></div></section>
 
   <section id="support" class="support"><div class="coffee">K</div><div><span class="eyebrow">KEEP OLD COMPUTERS PLAYING</span><h2>Like the idea? Help fund the weird little details.</h2><p>Plugcade began with one person’s idea and is being built in public with AI-assisted development. The vision, product decisions, testing, old hardware, hosting and paid tools are still real work. If Plugcade revives a forgotten PC or gives a kid a first arcade, you can help carry it forward.</p><a class="button primary" href="https://ko-fi.com/rbt4dev">SUPPORT PLUGCADE ON KO-FI →</a><small>No popup. No locked features. No guilt trip.</small></div></section>
 
