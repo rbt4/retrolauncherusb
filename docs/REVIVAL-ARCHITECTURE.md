@@ -2,9 +2,11 @@
 
 ## Product definition
 
-Plugcade is an offline-first, portable game launcher for user-supplied DOS games,
-Game Boy Advance ROMs, and supported DOS CD-ROM images. It contains no commercial
-games, ROMs, disc images, BIOS files, or license keys.
+Plugcade is an offline-first, portable game launcher for user-supplied games from
+classic computers and consoles. Core 0.3 exposes 26 platform adapters while the
+owner supplies emulator builds appropriate to the actual Windows version and
+hardware. It contains no commercial games, ROMs, disc images, BIOS files, or
+license keys.
 
 The public website explains the project and hosts releases. The downloaded
 launcher never requires the website, an account, installation, or an internet
@@ -34,6 +36,7 @@ PLUGCADE/
     DOS/
     GBA/
     CD-ROM/
+    <enabled-platform>/
   Library/
     DOS/<game-id>/
     GBA/<game-id>/
@@ -41,6 +44,7 @@ PLUGCADE/
   Emulators/
     DOS/
     GBA/
+    <enabled-platform>/
   Saves/
     DOS/<game-id>/
     GBA/<game-id>/
@@ -57,6 +61,44 @@ PLUGCADE/
 
 All internal paths are stored relative to the Plugcade root. Linked computer
 folders may use absolute paths but are clearly marked non-portable.
+
+## Platform adapters
+
+Core keeps system support data-driven and lightweight. Each adapter defines an
+ID, display name, accepted extensions, library folder, emulator folder, save
+folder, visual symbol, and launch mode. Core 0.3 includes adapters for DOS, DOS
+CD-ROM, Arcade/MAME, NES, SNES, Nintendo 64, Game Boy, Game Boy Color, Game Boy
+Advance, Virtual Boy, Genesis/Mega Drive, Master System, Game Gear, Sega 32X,
+Sega CD, PlayStation 1, PC Engine/TurboGrafx, Atari 2600, Atari 7800, Atari Lynx,
+Neo Geo Pocket, WonderSwan, ColecoVision, Intellivision, MSX, and Amiga.
+
+An enabled adapter is not a compatibility claim. The emulator binary, BIOS,
+operating system, drivers, and hardware determine whether a title can run. The
+adapter gives Plugcade a predictable folder and launch contract without making
+the core download enormous.
+
+Every non-DOS adapter may use `Emulators/<id>/emulator.ini`:
+
+```ini
+run=emulator.exe
+args="%ROM%"
+```
+
+`%ROM%`, `%ROOT%`, and `%SAVES%` are expanded at launch. If no configuration is
+present, Core uses the first `.exe` in that system's emulator folder and passes
+the game path in quotes.
+
+## Kid Mode
+
+Kid Mode is the default navigation experience. It shows large cover tiles and
+only Play, Say, and Help actions. Arrow keys select a title, Enter launches,
+Space speaks the title through Windows speech when available, and H opens the
+local `help.txt` card. Importing, file browsing, platform setup, diagnostics, and
+emulator configuration remain in Grown-up Mode.
+
+Kid Mode is not a security boundary. Editions must describe it as simplified
+navigation and continue to recommend Windows accounts, parental controls, and
+adult supervision where appropriate.
 
 ## First-run experience
 
@@ -77,6 +119,8 @@ folders may use absolute paths but are clearly marked non-portable.
    title and prefer the descriptor file when launching.
 7. Copy or index, verify file count and size, then write `games.tsv` atomically.
 8. Place ambiguous and unsupported items in the report; never guess silently.
+9. Offer a manually selected collection folder and match only that folder or its
+   immediate system-named children; never turn this into a whole-disk scan.
 
 ## Classification rules
 
@@ -124,6 +168,18 @@ open-source emulator with its license, source offer/notice when required, versio
 checksum, and upstream link. Frozen old-OS emulator versions are never silently
 updated.
 
+## Optional AI helper boundary
+
+The Core, Legacy, Retro, and DOS Boot editions never require or include a cloud
+AI helper. Offline `help.txt` cards remain the universal help format.
+
+A future Standard-edition Help Buddy may send one manually approved screenshot
+to a multimodal service such as Gemini. It must be disabled by default, require
+grown-up consent, preview and redact every capture, avoid continuous recording,
+delete captures after use, apply child-appropriate filtering, log usage, and use
+a server-side proxy so no API key ships in the client. See
+`docs/AI-HELPER-PRIVACY.md` for the detailed gate.
+
 ## Disc-image boundary
 
 Initial support means DOS CD-ROM games launched through a compatible DOS emulator.
@@ -151,9 +207,11 @@ cannot drift from the actual packages.
 
 1. Preserve v1.1 as abandoned historical source and extract regression cases.
 2. Implement the shared layout, catalogue, and non-destructive importer.
-3. Implement DOS and GBA adapters; add DOS CD-image support after those pass.
-4. Ship Standard and Classic alpha builds.
-5. Test and freeze a Legacy toolchain/build.
-6. Prototype Retro separately; do not weaken newer editions for Win9x.
-7. Replace the current launcher mock-up website with the download-focused site.
-8. Publish signed/checksummed GitHub Releases and optimized demo animations.
+3. Implement the adapter registry, Kid Mode, spoken names, cover art, and local
+   help cards.
+4. Build a public emulator/OS compatibility test matrix for the 26 adapters.
+5. Ship Standard and Classic alpha builds with legally redistributable binaries.
+6. Test and freeze a Legacy toolchain/build.
+7. Prototype Retro separately; do not weaken newer editions for Win9x.
+8. Prototype Help Buddy only after the privacy, safety, proxy, and cost gates.
+9. Publish signed/checksummed GitHub Releases and optimized demo animations.
