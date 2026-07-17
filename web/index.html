@@ -1,14 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ff522e"><meta name="description" content="Plugcade turns an old Windows computer into a portable offline retro arcade."><title>Plugcade — Give an old PC another life</title><link rel="stylesheet" href="styles.css"></head>
-<body><header><a class="brand" href="#top"><b>P</b><span>PLUGCADE<small>YOUR ARCADE. ANYWHERE.</small></span></a><nav><a href="#how">How it works</a><a href="#downloads">Downloads</a><a href="#compatibility">Compatibility</a><a class="tiny" href="https://github.com/rbt4/retrolauncherusb">GitHub ↗</a></nav></header>
-<main id="top"><section class="hero"><div class="hero-copy"><span class="eyebrow">OLD PC. NEW HIGH SCORE.</span><h1>Give that old computer <em>another life.</em></h1><p>Plugcade is a tiny, offline game launcher built for computers the modern web left behind. Put it on a USB, add your own games, plug in and play.</p><div class="buttons"><a class="button primary" href="#downloads">↓ DOWNLOAD ALPHA</a><a class="button secondary" href="#demo">SEE IT WORK →</a></div><div class="trust"><span>✓ No installation</span><span>✓ No internet</span><span>✓ No account</span></div></div><div class="usb-scene" aria-label="Illustration of a Plugcade USB stick and old computer"><div class="monitor"><div class="screen"><i>PLAYER 1 READY</i><strong>PLUGCADE</strong><span>▶ PICK A GAME</span></div><div class="stand"></div></div><div class="usb"><b>P</b><span>PLUGCADE</span></div></div></section>
-<section class="ticker"><span>DOS</span><i>◆</i><span>GAME BOY ADVANCE</span><i>◆</i><span>CD-ROM</span><i>◆</i><span>PORTABLE</span><i>◆</i><span>OFFLINE</span></section>
-<section id="demo" class="section"><div class="section-title"><span class="eyebrow">SEE IT IN ACTION</span><h2>From scattered files to arcade night.</h2><p>These live mini-demos show the actual Plugcade workflow—no installation wizard and no cloud dependency.</p></div><div class="demos">
-<article><div class="demo drop"><div class="folder f1">DOS</div><div class="folder f2">GBA</div><div class="folder f3">CD</div><div class="file rom">GAME.GBA</div><div class="cursor">➜</div></div><span>01</span><h3>Drop in your games</h3><p>Use the obvious DOS, GBA and CD-ROM folders. Plugcade never downloads games or deletes your originals.</p></article>
-<article><div class="demo organize"><div class="scanline"></div><div class="scan">SCANNING...</div><div class="rows"><b>✓ Commander</b><b>✓ Emerald</b><b>✓ Myst</b></div><div class="done">3 READY</div></div><span>02</span><h3>Plugcade organizes them</h3><p>It copies or indexes your files, groups disc sets and asks when a DOS folder has more than one possible program.</p></article>
-<article><div class="demo launch"><div class="mini-card"><div class="mini-cover">P</div><b>Prince of Persia</b><button>▶ PLAY</button></div><div class="flash">LAUNCHING!</div></div><span>03</span><h3>Play completely offline</h3><p>The launcher and library live on the computer or USB. Drive letters can change; the portable paths still work.</p></article>
-</div></section>
-<section id="how" class="how"><div><span class="eyebrow">RIDICULOUSLY SIMPLE</span><h2>Download. Drop. Play.</h2></div><ol><li><b>1</b><span><strong>Extract Plugcade</strong>Directly onto a computer or USB drive.</span></li><li><b>2</b><span><strong>Add your files</strong>Use the included DROP_GAMES_HERE folders.</span></li><li><b>3</b><span><strong>Run Plugcade</strong>Import safely, choose a game and play offline.</span></li></ol></section>
-<section id="downloads" class="section downloads"><div class="section-title"><span class="eyebrow">DOWNLOADS</span><h2>Start with the Core Alpha.</h2><p>The first public build is intentionally honest: the launcher works, but you supply compatible portable emulator executables and legally obtained game files.</p></div><div class="download-card featured"><div class="badge">AVAILABLE NOW</div><div><span class="version">0.2 ALPHA · CORE</span><h3>Plugcade Core</h3><p>Graphical offline launcher, safe folder importer, DOS/GBA/CD library, system check and lightweight fallback.</p><ul><li>Windows HTA/JScript interface</li><li>No bundled runtime</li><li>No games or emulator binaries</li><li>Plain-text configuration</li></ul></div><div class="download-action"><a class="button primary" href="downloads/Plugcade-Core-0.2-alpha.zip" download>↓ DOWNLOAD ZIP</a><small id="zipmeta">Portable ZIP</small><a class="source" href="https://github.com/rbt4/retrolauncherusb/tree/main/launcher">Browse source →</a></div></div><div class="coming"><article><span>COMING NEXT</span><h3>Standard Full</h3><p>Windows 10/11 package with tested redistributable emulators.</p></article><article><span>COMING NEXT</span><h3>Classic Full</h3><p>Frozen Windows 7/8.1-compatible emulator package.</p></article><article><span>RESEARCH TRACK</span><h3>Legacy & Retro</h3><p>XP/Vista/2000 and experimental Windows 98/ME editions.</p></article></div></section>
-<section id="compatibility" class="compat"><div><span class="eyebrow">CHOOSE HONESTLY</span><h2>Old means different things.</h2><p>A single “works everywhere” ZIP would be a lie. Plugcade editions freeze the correct launcher and emulator combination for each Windows generation.</p></div><table><thead><tr><th>Edition</th><th>Windows</th><th>Status</th></tr></thead><tbody><tr><td>Standard</td><td>10 / 11</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Classic</td><td>7 / 8.1</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Legacy</td><td>XP / Vista / 2000</td><td><span class="research">TESTING</span></td></tr><tr><td>Retro</td><td>98 / ME / NT4</td><td><span class="research">EXPERIMENTAL</span></td></tr></tbody></table></section>
-<section class="legal"><strong>Bring your own games.</strong><p>Plugcade contains no commercial games, ROMs, disc images, BIOS files or licence keys. Use content you are legally permitted to use. Initial CD-ROM support targets DOS CD games; native Windows CD games often require game-specific installation and drivers.</p></section></main>
-<footer><div class="brand invert"><b>P</b><span>PLUGCADE<small>LET OLD COMPUTERS PLAY.</small></span></div><p>Open-source. Offline-first. Built in public.</p><a href="https://github.com/rbt4/retrolauncherusb">GitHub repository ↗</a></footer><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ff522e">
+  <meta name="description" content="Plugcade turns an old Windows computer into a portable, kid-friendly offline retro arcade.">
+  <title>Plugcade — Let old computers play</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="#top"><b>P</b><span>PLUGCADE<small>YOUR ARCADE. ANYWHERE.</small></span></a>
+  <nav><a href="#kidmode">Kid Mode</a><a href="#systems">Systems</a><a href="#downloads">Download</a><a href="#support">Support</a><a class="tiny" href="https://ko-fi.com/rbt4dev">KO-FI +</a></nav>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">OLD PC. NEW HIGH SCORE.</span>
+      <h1>Give that old computer <em>another life.</em></h1>
+      <p>Plugcade is a tiny, offline game launcher built for computers the modern web left behind—and simple enough for a child to explore.</p>
+      <div class="buttons"><a class="button primary" href="#downloads">↓ DOWNLOAD 0.3 ALPHA</a><a class="button secondary" href="#demo">SEE IT WORK →</a></div>
+      <div class="trust"><span>✓ Kid Mode default</span><span>✓ No internet</span><span>✓ No account</span></div>
+    </div>
+    <div class="usb-scene" aria-label="Illustration of a Plugcade USB stick and old computer"><div class="monitor"><div class="screen"><i>PLAYER 1 READY</i><strong>PLUGCADE</strong><span>▶ PICK A GAME</span></div><div class="stand"></div></div><div class="usb"><b>P</b><span>PLUGCADE</span></div></div>
+  </section>
+
+  <section class="ticker"><span>26 SYSTEM ADAPTERS</span><i>◆</i><span>KID MODE</span><i>◆</i><span>SPOKEN NAMES</span><i>◆</i><span>PORTABLE</span><i>◆</i><span>OFFLINE</span></section>
+
+  <section id="demo" class="section">
+    <div class="section-title"><span class="eyebrow">SEE IT IN ACTION</span><h2>From scattered files to arcade night.</h2><p>The workflow stays simple even when the collection is not: choose systems, import safely, then play.</p></div>
+    <div class="demos">
+      <article><div class="demo drop"><div class="folder f1">NES</div><div class="folder f2">GBA</div><div class="folder f3">PS1</div><div class="file rom">GAME.GBA</div><div class="cursor">➜</div></div><span>01</span><h3>Drop in your games</h3><p>Use the obvious system folders or select an existing collection. Plugcade never deletes the originals.</p></article>
+      <article><div class="demo organize"><div class="scanline"></div><div class="scan">SCANNING...</div><div class="rows"><b>✓ Commander</b><b>✓ Emerald</b><b>✓ Sonic</b></div><div class="done">3 READY</div></div><span>02</span><h3>Plugcade organizes them</h3><p>Platform adapters keep the same library usable while each computer gets an emulator appropriate to its age.</p></article>
+      <article><div class="demo launch"><div class="mini-card"><div class="mini-cover">P</div><b>Prince of Persia</b><button>▶ PLAY</button></div><div class="flash">LAUNCHING!</div></div><span>03</span><h3>Play completely offline</h3><p>The launcher, help cards and library live on the computer or USB. Drive letters can change; portable paths still work.</p></article>
+    </div>
+  </section>
+
+  <section id="kidmode" class="family">
+    <div class="family-copy"><span class="eyebrow">KID MODE IS THE DEFAULT</span><h2>Big pictures. Tiny decisions.</h2><p>Setup controls disappear. Children choose a large cover tile, press Play, hear a game name when Windows speech is available, or open a simple offline help card.</p><ul><li>Arrow keys choose; Enter plays</li><li>Space says the game name</li><li>H opens a parent-written <code>help.txt</code></li><li>No store, account, chat or delete buttons</li></ul><small>Kid Mode simplifies navigation; it is not a replacement for Windows parental controls or grown-up supervision.</small></div>
+    <div class="kid-console" aria-label="Kid Mode interface example"><div class="kid-top">CHOOSE A GAME</div><div class="kid-cards"><div><b>M</b><span>MARIO</span></div><div class="chosen"><b>S</b><span>SONIC</span></div><div><b>K</b><span>KIRBY</span></div></div><div class="kid-actions"><b>← → CHOOSE</b><b>ENTER PLAY</b><b>SPACE SAY</b></div></div>
+  </section>
+
+  <section id="systems" class="section systems">
+    <div class="section-title"><span class="eyebrow">FEATURE-PACKED, NOT BLOATED</span><h2>One library. 26 classic-system adapters.</h2><p>Enable only what you need. Plugcade supplies the folders, importing, covers, help and launch wiring; you supply emulator builds compatible with the actual computer.</p></div>
+    <div class="system-chips"><span>DOS</span><span>DOS CD</span><span>ARCADE</span><span>NES</span><span>SNES</span><span>N64</span><span>GB</span><span>GBC</span><span>GBA</span><span>VIRTUAL BOY</span><span>GENESIS</span><span>MASTER SYSTEM</span><span>GAME GEAR</span><span>32X</span><span>SEGA CD</span><span>PS1</span><span>PC ENGINE</span><span>ATARI 2600</span><span>ATARI 7800</span><span>LYNX</span><span>NEO GEO POCKET</span><span>WONDERSWAN</span><span>COLECOVISION</span><span>INTELLIVISION</span><span>MSX</span><span>AMIGA</span></div>
+    <div class="honest"><strong>Why not literally every console?</strong><p>Newer systems require far more CPU/GPU power, different operating systems, BIOS files and emulator builds. Plugcade’s adapter format can grow without pretending a Pentium can emulate a PlayStation 2.</p></div>
+  </section>
+
+  <section id="how" class="how">
+    <div><span class="eyebrow">RIDICULOUSLY SIMPLE</span><h2>Download. Choose. Play.</h2></div>
+    <ol><li><b>1</b><span><strong>Extract Plugcade</strong>Directly onto a computer or USB drive.</span></li><li><b>2</b><span><strong>Choose systems</strong>Plugcade creates the right folders automatically.</span></li><li><b>3</b><span><strong>Add and import</strong>Drop files in—or select an organized collection.</span></li><li><b>4</b><span><strong>Hand over Kid Mode</strong>Big covers, simple controls, offline help.</span></li></ol>
+  </section>
+
+  <section class="helper">
+    <div><span class="eyebrow">HELP BUDDY</span><h2>Helpful now. AI only with permission.</h2></div>
+    <div class="helper-grid"><article><span>AVAILABLE IN CORE</span><h3>Offline help cards</h3><p>Add a tiny <code>help.txt</code> beside any game. Plugcade displays it and can read it aloud without sending anything anywhere.</p></article><article><span>DESIGN TRACK</span><h3>Optional Gemini helper</h3><p>A future Standard-edition connector may explain one manually approved screenshot. No continuous watching, no key inside the app, no background recording, and never enabled by default.</p><a href="https://github.com/rbt4/retrolauncherusb/blob/main/docs/AI-HELPER-PRIVACY.md">Read the privacy design →</a></article></div>
+  </section>
+
+  <section id="downloads" class="section downloads">
+    <div class="section-title"><span class="eyebrow">DOWNLOADS</span><h2>Start with Core 0.3 Alpha.</h2><p>The launcher is real and lightweight. You provide legally obtained game files, required BIOS files, and compatible portable emulators.</p></div>
+    <div class="download-card featured"><div class="badge">AVAILABLE NOW</div><div><span class="version">0.3 ALPHA · CORE</span><h3>Plugcade Core</h3><p>Kid Mode, spoken navigation, offline help cards, safe collection import, 26 adapters, covers, system chooser, diagnostics and lightweight fallback.</p><ul><li>Windows HTA/JScript interface</li><li>No bundled runtime</li><li>No games or emulator binaries</li><li>Plain-text configuration</li></ul></div><div class="download-action"><a class="button primary" href="downloads/Plugcade-Core-0.3-alpha.zip" download>↓ DOWNLOAD ZIP</a><small id="zipmeta">Portable ZIP · auto-built</small><a class="source" href="https://github.com/rbt4/retrolauncherusb/tree/main/launcher">Browse source →</a></div></div>
+    <div class="coming"><article><span>COMING NEXT</span><h3>Standard Full</h3><p>Windows 10/11 package with tested redistributable emulators.</p></article><article><span>COMING NEXT</span><h3>Classic Full</h3><p>Frozen Windows 7/8.1-compatible emulator package.</p></article><article><span>RESEARCH TRACK</span><h3>Legacy & Retro</h3><p>XP/Vista/2000 and experimental Windows 98/ME editions.</p></article></div>
+  </section>
+
+  <section id="compatibility" class="compat"><div><span class="eyebrow">CHOOSE HONESTLY</span><h2>Old means different things.</h2><p>A single “works everywhere” emulator bundle would be a lie. Plugcade editions freeze the correct launcher and emulator combination for each Windows generation.</p></div><table><thead><tr><th>Edition</th><th>Windows</th><th>Status</th></tr></thead><tbody><tr><td>Core</td><td>Varies by emulator</td><td><span class="research">ALPHA</span></td></tr><tr><td>Standard</td><td>10 / 11</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Classic</td><td>7 / 8.1</td><td><span class="planned">PLANNED</span></td></tr><tr><td>Legacy</td><td>XP / Vista / 2000</td><td><span class="research">TESTING</span></td></tr><tr><td>Retro</td><td>98 / ME / NT4</td><td><span class="research">EXPERIMENTAL</span></td></tr></tbody></table></section>
+
+  <section id="support" class="support"><div class="coffee">K</div><div><span class="eyebrow">KEEP OLD COMPUTERS PLAYING</span><h2>Like the idea? Help fund the weird little details.</h2><p>Plugcade began with one person’s idea and is being built in public with AI-assisted development. The vision, product decisions, testing, old hardware, hosting and paid tools are still real work. If Plugcade revives a forgotten PC or gives a kid a first arcade, you can help carry it forward.</p><a class="button primary" href="https://ko-fi.com/rbt4dev">SUPPORT PLUGCADE ON KO-FI →</a><small>No popup. No locked features. No guilt trip.</small></div></section>
+
+  <section class="legal"><strong>Bring your own games.</strong><p>Plugcade contains no commercial games, ROMs, disc images, BIOS files or licence keys. Use content you are legally permitted to use. Console and old-Windows support depends on compatible emulator builds and actual hardware testing.</p></section>
+</main>
+<footer><div class="brand invert"><b>P</b><span>PLUGCADE<small>LET OLD COMPUTERS PLAY.</small></span></div><p>Open-source. Offline-first. AI-assisted. Human-directed.</p><div><a href="https://ko-fi.com/rbt4dev">Ko-fi</a> · <a href="https://github.com/rbt4/retrolauncherusb">GitHub repository ↗</a></div></footer>
+<script src="app.js"></script>
+</body>
+</html>
