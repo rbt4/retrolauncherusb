@@ -1,16 +1,19 @@
-name: Deploy Plugcade to GitHub Pages
+name: Build and deploy Plugcade
 on:
   push:
     branches: [main]
-    paths: ["web/**", ".github/workflows/pages.yml"]
+    paths: ["launcher/**", "web/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: true
+
 jobs:
   deploy:
     environment:
@@ -19,10 +22,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Validate launcher source
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+          const html = fs.readFileSync("launcher/Plugcade.hta", "utf8");
+          const script = html.match(/<script language="JScript">([\s\S]*?)<\/script>/i);
+          if (!script) throw new Error("Plugcade JScript block is missing");
+          new Function(script[1]);
+          [
+            "launcher/START_PLUGCADE.bat",
+            "launcher/PLUGCADE-LITE.bat",
+            "launcher/README.txt"
+          ].forEach((path) => {
+            if (!fs.existsSync(path)) throw new Error(path + " is missing");
+          });
+          console.log("Launcher source passed validation.");
+          NODE
+
+      - name: Build portable Core download
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for path in Path("launcher").rglob("*"):
+              if path.is_file() and path.suffix.lower() in {".bat", ".hta", ".txt", ".ini"}:
+                  data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+                  path.write_bytes(data)
+          PY
+          mkdir -p web/downloads
+          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.2-alpha.zip .)
+          (cd web/downloads && sha256sum Plugcade-Core-0.2-alpha.zip > Plugcade-Core-0.2-alpha.sha256.txt)
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
