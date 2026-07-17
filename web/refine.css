@@ -75,6 +75,60 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:4px solid 
 .pcd-game-view.is-over .pcd-game-over{display:flex}
 @keyframes pcdBoot{0%{width:0}38%{width:22%}72%{width:61%}100%{width:100%}}
 
+/* Multi-game arcade: a real library, a real-looking USB and four playable games. */
+.hero .usb{overflow:visible}
+.hero .usb:after{content:"";position:absolute;right:-58px;width:58px;height:48px;background:linear-gradient(#d9dde1 0 22%,#aeb5bc 23% 78%,#e6eaed 79%);border:4px solid var(--ink);border-left:0;border-radius:0 7px 7px 0;box-shadow:inset -8px 0 #8d969e}
+.hero .usb:before{content:"•  •";position:absolute;right:-48px;z-index:2;top:24px;color:#616870;font:16px "Space Mono";letter-spacing:7px}
+.pcd-off-view small{color:#aaa2b8;font:700 9px "Press Start 2P";animation:pcdBlink 1.2s steps(2,end) infinite}
+.pcd-library-view{justify-content:flex-start;gap:13px;padding:65px 16px 15px}
+.pcd-library-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;width:100%}
+.pcd-library-tile{min-width:0;padding:7px;background:#fffaf0;color:var(--ink);border:3px solid #777084;border-radius:5px;box-shadow:3px 3px 0 #080611;cursor:pointer;font-family:"Press Start 2P";text-align:left;transition:transform .12s,border-color .12s,box-shadow .12s;touch-action:manipulation}
+.pcd-library-tile:hover{transform:translateY(-2px);border-color:#ddd3c1}
+.pcd-library-tile.is-selected{border-color:var(--yellow);box-shadow:0 0 0 3px var(--orange),5px 6px 0 #080611;transform:translateY(-3px)}
+.pcd-library-tile b{display:block;min-height:25px;margin-top:7px;font-size:7px;line-height:1.45}
+.pcd-library-tile small{display:block;color:#706879;font:700 7px/1.35 "Space Mono"}
+.pcd-cover{position:relative;height:102px;display:grid;place-items:center;overflow:hidden;border:2px solid var(--ink);color:var(--yellow);font:40px "Press Start 2P";text-shadow:3px 3px 0 var(--ink)}
+.pcd-cover i{position:relative;z-index:2;font-style:normal}
+.pcd-cover-stars{background:radial-gradient(circle at 28% 24%,#fff 0 2px,transparent 3px),radial-gradient(circle at 72% 40%,#fff 0 1px,transparent 2px),linear-gradient(145deg,#f65b9a,var(--orange))}
+.pcd-cover-moon{background:radial-gradient(circle at 68% 22%,#fff 0 2px,transparent 3px),linear-gradient(145deg,#352c73,#35aef4);color:#fff4df}
+.pcd-cover-moon:after{content:"";position:absolute;left:-10%;right:-10%;height:35%;bottom:-12%;border-radius:50%;background:#c8c2ba;border:3px solid var(--ink)}
+.pcd-cover-rocket{background:repeating-linear-gradient(90deg,#211a37 0 17px,#292241 18px 34px);color:#fff}
+.pcd-cover-rocket i{transform:rotate(0);filter:drop-shadow(0 15px 0 var(--orange))}
+.pcd-cover-breaker{background:repeating-linear-gradient(0deg,var(--pink) 0 15px,var(--ink) 16px 19px,var(--blue) 20px 35px,var(--ink) 36px 39px);color:#fff}
+.pcd-cover-breaker i{position:absolute;bottom:9px;color:var(--yellow);font-size:23px;text-shadow:none}
+.pcd-library-actions{display:grid;grid-template-columns:46px minmax(0,1fr) 46px;gap:8px;width:min(100%,410px)}
+.pcd-library-actions .pcd-button{padding:8px}
+.pcd-library-actions .pcd-play{display:flex;align-items:center;justify-content:center;gap:9px}
+.pcd-play-title{font-size:7px;color:#5b3140}
+.pcd-library-help{color:#aaa2b8;font:700 8px "Space Mono"}
+.pcd-game-hud{align-items:center}
+.pcd-game-name{max-width:170px;overflow:hidden;text-overflow:ellipsis;color:var(--yellow);white-space:nowrap}
+.pcd-usb-dock{position:relative;width:min(100%,500px);height:94px;margin:31px auto 0;filter:drop-shadow(5px 6px 0 #100d19)}
+.pcd-usb-stick{position:absolute;left:0;top:5px;z-index:3;width:202px;height:56px;display:flex;align-items:stretch;padding:0;border:0;background:transparent;color:var(--ink);cursor:pointer;transition:left .65s cubic-bezier(.2,.82,.2,1),transform .18s;touch-action:manipulation}
+.pcd-usb-stick:hover{transform:translateY(-3px)}
+.pcd-usb-stick:disabled{opacity:1;cursor:default}
+.pcd-usb-body{position:relative;width:150px;display:flex;align-items:center;gap:9px;padding:8px 11px;background:var(--yellow);border:4px solid var(--ink);border-radius:10px 0 0 10px;box-shadow:inset 0 -7px #e9ae20}
+.pcd-usb-body>b{width:31px;height:31px;display:grid;place-items:center;flex:none;background:var(--orange);color:white;border:3px solid var(--ink);font:11px "Press Start 2P"}
+.pcd-usb-body>span{font:8px "Press Start 2P";text-align:left}
+.pcd-usb-body small{display:block;margin-top:5px;font:700 6px "Space Mono"}
+.pcd-usb-body>i{position:absolute;left:7px;top:50%;width:8px;height:15px;border:3px solid var(--ink);border-radius:50%;transform:translateY(-50%)}
+.pcd-usb-plug{position:relative;width:52px;margin-block:5px;background:linear-gradient(#e9edf0 0 18%,#a8b0b8 19% 80%,#d8dde1 81%);border:4px solid var(--ink);border-left:0;border-radius:0 5px 5px 0;box-shadow:inset -7px 0 #858e97}
+.pcd-usb-plug i{position:absolute;top:8px;width:7px;height:7px;border:2px solid #626970;background:#dce1e5}
+.pcd-usb-plug i:first-child{left:10px}.pcd-usb-plug i:last-child{right:10px}
+.pcd-usb-arrow{position:absolute;left:48%;top:16px;color:var(--yellow);font:26px "Press Start 2P";animation:pcdNudge .9s ease-in-out infinite alternate}
+.pcd-usb-port{position:absolute;right:0;top:10px;width:86px;height:47px;display:flex;align-items:center;gap:7px;padding:7px;background:#ddd3c1;border:4px solid var(--ink);border-radius:7px;color:var(--ink)}
+.pcd-usb-port i{width:47px;height:18px;background:#17131f;border:3px solid var(--ink);box-shadow:inset 0 0 0 3px #5c5667}
+.pcd-usb-port b{font:7px "Press Start 2P";transform:rotate(90deg)}
+.pcd-usb-hint{position:absolute;left:0;right:0;bottom:0;text-align:center;color:#cfc7db;font:700 8px "Space Mono";letter-spacing:.07em}
+.pcd-demo.is-inserted .pcd-usb-stick{left:calc(100% - 292px);transform:none}
+.pcd-demo.is-inserted .pcd-usb-arrow{opacity:0}
+.pcd-demo.is-inserted .pcd-usb-body{box-shadow:inset 0 -7px #e9ae20,0 0 18px #ffd13b55}
+.pcd-status{align-items:center;flex-wrap:wrap;margin-top:4px}
+.pcd-sound{min-height:30px;padding:6px 8px;background:transparent;color:#bfb7cc;border:1px solid #6e667b;border-radius:4px;font:700 8px "Space Mono";cursor:pointer}
+.pcd-sound[aria-pressed="true"]{background:#a9f2c0;color:#18131f;border-color:#a9f2c0}
+@keyframes pcdBlink{50%{opacity:.3}}
+@keyframes pcdNudge{to{transform:translateX(8px)}}
+
 /* Tablet: keep the experience, remove the awkward half-hidden navigation. */
 @media(max-width:1050px){
   header{padding-inline:20px}
@@ -158,6 +212,38 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:4px solid 
   .coffee{width:70px;height:70px;font-size:25px}
   .legal{margin:0 18px 55px;padding:20px}
   footer{padding:27px 18px}
+}
+
+@media(max-width:650px){
+  .hero .usb:after,.hero .usb:before{display:none}
+  .pcd-library-view{gap:8px;padding:49px 8px 8px}
+  .pcd-library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .pcd-library-tile{display:grid;grid-template-columns:58px minmax(0,1fr);grid-template-rows:auto auto;column-gap:7px;align-items:center;padding:5px}
+  .pcd-library-tile b{min-height:0;margin:0;font-size:6px}
+  .pcd-library-tile small{font-size:6px}
+  .pcd-cover{grid-row:1/3;width:58px;height:55px;font-size:25px}
+  .pcd-cover-breaker i{font-size:15px}
+  .pcd-library-actions{grid-template-columns:42px minmax(0,1fr) 42px;gap:5px}
+  .pcd-library-actions .pcd-play{gap:5px}
+  .pcd-play-title{font-size:6px}
+  .pcd-library-help{font-size:7px}
+  .pcd-game-name{max-width:88px;font-size:6px}
+  .pcd-usb-dock{height:86px;margin-top:25px}
+  .pcd-usb-stick{width:164px;height:49px}
+  .pcd-usb-body{width:122px;gap:5px;padding:6px 7px;border-width:3px}
+  .pcd-usb-body>b{width:27px;height:27px;font-size:9px}
+  .pcd-usb-body>span{font-size:6px}
+  .pcd-usb-body small{font-size:5px}
+  .pcd-usb-body>i{display:none}
+  .pcd-usb-plug{width:42px;border-width:3px;border-left:0}
+  .pcd-usb-plug i{width:5px;height:5px;top:8px}
+  .pcd-usb-port{width:70px;height:42px;padding:5px;border-width:3px}
+  .pcd-usb-port i{width:38px;height:16px}
+  .pcd-usb-port b{font-size:6px}
+  .pcd-usb-arrow{left:51%;top:13px;font-size:19px}
+  .pcd-demo.is-inserted .pcd-usb-stick{left:calc(100% - 220px)}
+  .pcd-usb-hint{font-size:7px}
+  .pcd-status{margin-top:2px}
 }
 
 @media(max-width:380px){
