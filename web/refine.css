@@ -50,8 +50,9 @@ a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:4px solid 
 .pcd-library-view{padding-top:68px}
 .pcd-library-top,.pcd-game-hud{position:absolute!important;left:0;right:0;top:0;display:flex;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:2px solid #544c67;background:#201a34;color:white;font:700 9px "Press Start 2P";z-index:4!important}
 .pcd-library-top span{color:#a9f2c0}
-.pcd-game-tile{width:min(240px,82%);padding:12px;background:#fffaf0;color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 #080611;cursor:pointer;font:700 10px "Press Start 2P"}
+.pcd-game-tile{width:min(240px,82%);padding:12px;background:#fffaf0;color:var(--ink);border:3px solid var(--ink);box-shadow:6px 6px 0 #080611;cursor:default;font:700 10px "Press Start 2P"}
 .pcd-game-tile .pcd-cover{height:135px;margin-bottom:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--orange),#f65b9a);color:var(--yellow);border:3px solid var(--ink);font:56px "Press Start 2P";text-shadow:4px 4px 0 var(--ink)}
+.mini-card .mock-play{display:block;width:100%;margin-top:8px;padding:6px;background:var(--yellow);border:2px solid var(--ink);font-weight:bold}
 .pcd-game-view{min-height:430px;padding-top:49px}
 .pcd-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--game-bg)}
 .pcd-touch-controls{display:flex;gap:12px;justify-content:center;padding:10px;background:#201a34}
