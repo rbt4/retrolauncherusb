@@ -60,7 +60,7 @@ jobs:
                   path.write_bytes(data)
           PY
           mkdir -p web/downloads
-          (cd launcher && zip -qr -FS ../web/downloads/Plugcade-Core-0.4-alpha.zip .)
+          (cd launcher && zip -qr -FS -X ../web/downloads/Plugcade-Core-0.4-alpha.zip .)
           (cd web/downloads && sha256sum Plugcade-Core-0.4-alpha.zip > Plugcade-Core-0.4-alpha.sha256.txt)
 
       - uses: actions/configure-pages@v5
