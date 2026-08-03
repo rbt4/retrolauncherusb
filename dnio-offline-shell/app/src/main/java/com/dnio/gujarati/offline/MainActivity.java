@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
     private final ArrayList<Item> items = new ArrayList<>();
     private SharedPreferences prefs;
     private boolean pageReady;
+    private boolean smokeTestPending;
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
@@ -34,6 +35,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        smokeTestPending = getIntent().getBooleanExtra("dnio_smoke_test", false);
         loadCatalog();
 
         webView = new WebView(this);
@@ -49,6 +51,10 @@ public class MainActivity extends Activity {
             public void onPageFinished(WebView view, String url) {
                 pageReady = true;
                 notifyStatus();
+                if (smokeTestPending) {
+                    smokeTestPending = false;
+                    webView.postDelayed(() -> openPlayer("v001"), 400);
+                }
             }
         });
         setContentView(webView);
