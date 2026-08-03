@@ -46,30 +46,33 @@ jobs:
           grep -q 'videos/' app/src/main/java/com/dnio/gujarati/offline/PlayerActivity.java
       - name: Prepare Android emulator
         run: |
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
             "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
+          ADB="$ANDROID_HOME/platform-tools/adb"
+          test -x "$ADB"
           echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
             -n dnio-v3-smoke -k "system-images;android-35;google_apis;x86_64" --force
           nohup "$ANDROID_HOME/emulator/emulator" -avd dnio-v3-smoke \
             -no-window -no-audio -no-boot-anim -no-snapshot \
             -gpu swiftshader_indirect >/tmp/dnio-emulator.log 2>&1 &
-          adb wait-for-device
+          "$ADB" wait-for-device
           for i in $(seq 1 120); do
-            [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ] && break
+            [ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ] && break
             sleep 2
           done
-          test "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1"
+          test "$("$ADB" shell getprop sys.boot_completed | tr -d '\r')" = "1"
       - name: Install and exercise native embedded playback
         run: |
-          adb logcat -c
-          adb install -r app/build/outputs/apk/debug/app-debug.apk
-          adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity \
+          ADB="$ANDROID_HOME/platform-tools/adb"
+          "$ADB" logcat -c
+          "$ADB" install -r app/build/outputs/apk/debug/app-debug.apk
+          "$ADB" shell am start -W -n com.dnio.gujarati.offline/.MainActivity \
             --ez dnio_smoke_test true
           sleep 12
-          adb shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
-          adb shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
-          ! adb logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
+          "$ADB" shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
+          "$ADB" shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
+          ! "$ADB" logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
       - uses: actions/upload-artifact@v4
         with:
           name: dnio-all-in-one-native-v3-unsigned
