@@ -22,6 +22,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+      - name: Install media test tool
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Create synthetic embedded playback sample
         run: |
           mkdir -p app/src/main/assets/videos
