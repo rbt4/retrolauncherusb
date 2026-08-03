@@ -1,0 +1,1 @@
+Run the 30-second embedded-video smoke test so cache verification occurs before auto-advance.
