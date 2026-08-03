@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    private static final String PREFS = "dnio_gujarati_offline";
+    private static final String PREFS = "dnio_gujarati_v2";
 
     private WebView webView;
     private final ArrayList<Item> items = new ArrayList<>();
