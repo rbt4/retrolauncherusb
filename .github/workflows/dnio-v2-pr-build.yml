@@ -32,11 +32,16 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
-          echo no | avdmanager create avd --force --name dnioTest --package "system-images;android-35;google_apis;x86_64"
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -path '*/bin/sdkmanager' | sort -V | tail -1)"
+          AVDMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -path '*/bin/avdmanager' | sort -V | tail -1)"
+          test -x "$SDKMANAGER"
+          test -x "$AVDMANAGER"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
+          echo no | "$AVDMANAGER" create avd --force --name dnioTest --package "system-images;android-35;google_apis;x86_64"
           sudo chmod 666 /dev/kvm || true
-          nohup "$ANDROID_HOME/emulator/emulator" \
+          nohup "$SDK_ROOT/emulator/emulator" \
             -avd dnioTest \
             -no-window \
             -no-audio \
@@ -45,27 +50,29 @@ jobs:
             -no-snapshot \
             -wipe-data \
             > /tmp/dnio-emulator.log 2>&1 &
-          adb wait-for-device
-          timeout 600 bash -c 'until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r")" = "1" ]; do sleep 5; done'
-          adb shell input keyevent 82 || true
+          "$SDK_ROOT/platform-tools/adb" wait-for-device
+          timeout 600 bash -c 'until [ "$('"$SDK_ROOT"'/platform-tools/adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r")" = "1" ]; do sleep 5; done'
+          "$SDK_ROOT/platform-tools/adb" shell input keyevent 82 || true
 
       - name: Install and launch DNIO v2
         shell: bash
         run: |
           set -euxo pipefail
-          adb logcat -c
-          adb install -r app/build/outputs/apk/debug/app-debug.apk
-          adb shell am force-stop com.dnio.gujarati.offline
-          adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity | tee /tmp/dnio-start.txt
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          ADB="$SDK_ROOT/platform-tools/adb"
+          "$ADB" logcat -c
+          "$ADB" install -r app/build/outputs/apk/debug/app-debug.apk
+          "$ADB" shell am force-stop com.dnio.gujarati.offline
+          "$ADB" shell am start -W -n com.dnio.gujarati.offline/.MainActivity | tee /tmp/dnio-start.txt
           sleep 8
-          adb exec-out screencap -p > /tmp/dnio-v2-launch.png
-          adb logcat -d -t 1200 > /tmp/dnio-logcat.txt
+          "$ADB" exec-out screencap -p > /tmp/dnio-v2-launch.png
+          "$ADB" logcat -d -t 1200 > /tmp/dnio-logcat.txt
           grep -q "Status: ok" /tmp/dnio-start.txt
           if grep -E "FATAL EXCEPTION|AndroidRuntime.*Process: com\.dnio\.gujarati\.offline" /tmp/dnio-logcat.txt; then
             echo "DNIO crashed during emulator smoke test"
             exit 1
           fi
-          adb shell pidof com.dnio.gujarati.offline
+          "$ADB" shell pidof com.dnio.gujarati.offline
 
       - uses: actions/upload-artifact@v4
         if: always()
