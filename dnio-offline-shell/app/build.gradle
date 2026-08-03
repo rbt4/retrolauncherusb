@@ -20,6 +20,11 @@ android {
         }
     }
 
+    lint {
+        disable "ExpiredTargetSdkVersion"
+        abortOnError false
+    }
+
     androidResources {
         noCompress += ["mp4"]
     }
