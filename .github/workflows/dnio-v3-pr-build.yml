@@ -8,7 +8,7 @@ on:
       - ".github/workflows/dnio-v3-pr-build.yml"
 
 jobs:
-  build:
+  build-and-smoke-test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,6 +22,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
+      - name: Create synthetic embedded playback sample
+        run: |
+          mkdir -p app/src/main/assets/videos
+          ffmpeg -hide_banner -loglevel error -y \
+            -f lavfi -i color=c=0x335577:s=640x360:d=2 \
+            -f lavfi -i sine=frequency=440:duration=2 \
+            -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac \
+            app/src/main/assets/videos/v001.mp4
       - name: Build release and debug shells
         run: gradle :app:assembleRelease :app:assembleDebug --no-daemon --stacktrace
       - name: Validate shell assets and manifest
@@ -32,6 +40,32 @@ jobs:
           grep -q 'versionCode 3' app/build.gradle
           grep -q 'applicationId "com.dnio.gujarati.offline"' app/build.gradle
           grep -q 'videos/' app/src/main/java/com/dnio/gujarati/offline/PlayerActivity.java
+      - name: Prepare Android emulator
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
+          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
+            -n dnio-v3-smoke -k "system-images;android-35;google_apis;x86_64" --force
+          nohup "$ANDROID_HOME/emulator/emulator" -avd dnio-v3-smoke \
+            -no-window -no-audio -no-boot-anim -no-snapshot \
+            -gpu swiftshader_indirect >/tmp/dnio-emulator.log 2>&1 &
+          adb wait-for-device
+          for i in $(seq 1 120); do
+            [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ] && break
+            sleep 2
+          done
+          test "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1"
+      - name: Install and exercise native embedded playback
+        run: |
+          adb logcat -c
+          adb install -r app/build/outputs/apk/debug/app-debug.apk
+          adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity \
+            --ez dnio_smoke_test true
+          sleep 12
+          adb shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
+          adb shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
+          ! adb logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
       - uses: actions/upload-artifact@v4
         with:
           name: dnio-all-in-one-native-v3-unsigned
