@@ -1,0 +1,1 @@
+Retry native embedded-video emulator smoke test using the explicit platform-tools adb path.
