@@ -31,8 +31,8 @@ jobs:
         run: |
           mkdir -p app/src/main/assets/videos
           ffmpeg -hide_banner -loglevel error -y \
-            -f lavfi -i color=c=0x335577:s=640x360:d=2 \
-            -f lavfi -i sine=frequency=440:duration=2 \
+            -f lavfi -i color=c=0x335577:s=640x360:d=30 \
+            -f lavfi -i sine=frequency=440:duration=30 \
             -shortest -c:v libx264 -pix_fmt yuv420p -c:a aac \
             app/src/main/assets/videos/v001.mp4
       - name: Build release and debug shells
@@ -65,7 +65,7 @@ jobs:
             adb logcat -c
             adb install -r dnio-offline-shell/app/build/outputs/apk/debug/app-debug.apk
             adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity --ez dnio_smoke_test true
-            sleep 12
+            sleep 8
             adb shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
             adb shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
             ! adb logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
