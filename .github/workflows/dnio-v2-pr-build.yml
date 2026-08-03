@@ -9,8 +9,9 @@ on:
       - ".github/workflows/dnio-v2-pr-build.yml"
 
 jobs:
-  build:
+  build-and-smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: dnio-offline-shell
@@ -23,8 +24,60 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
-      - name: Build DNIO Gujarati Offline v2
-        run: gradle :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Build release and debug APKs
+        run: gradle :app:assembleRelease :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Prepare Android emulator
+        shell: bash
+        run: |
+          set -euxo pipefail
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
+          echo no | avdmanager create avd --force --name dnioTest --package "system-images;android-35;google_apis;x86_64"
+          sudo chmod 666 /dev/kvm || true
+          nohup "$ANDROID_HOME/emulator/emulator" \
+            -avd dnioTest \
+            -no-window \
+            -no-audio \
+            -no-boot-anim \
+            -gpu swiftshader_indirect \
+            -no-snapshot \
+            -wipe-data \
+            > /tmp/dnio-emulator.log 2>&1 &
+          adb wait-for-device
+          timeout 600 bash -c 'until [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d "\r")" = "1" ]; do sleep 5; done'
+          adb shell input keyevent 82 || true
+
+      - name: Install and launch DNIO v2
+        shell: bash
+        run: |
+          set -euxo pipefail
+          adb logcat -c
+          adb install -r app/build/outputs/apk/debug/app-debug.apk
+          adb shell am force-stop com.dnio.gujarati.offline
+          adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity | tee /tmp/dnio-start.txt
+          sleep 8
+          adb exec-out screencap -p > /tmp/dnio-v2-launch.png
+          adb logcat -d -t 1200 > /tmp/dnio-logcat.txt
+          grep -q "Status: ok" /tmp/dnio-start.txt
+          if grep -E "FATAL EXCEPTION|AndroidRuntime.*Process: com\.dnio\.gujarati\.offline" /tmp/dnio-logcat.txt; then
+            echo "DNIO crashed during emulator smoke test"
+            exit 1
+          fi
+          adb shell pidof com.dnio.gujarati.offline
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dnio-v2-smoke-test
+          path: |
+            /tmp/dnio-v2-launch.png
+            /tmp/dnio-start.txt
+            /tmp/dnio-logcat.txt
+            /tmp/dnio-emulator.log
+          if-no-files-found: warn
+
       - uses: actions/upload-artifact@v4
         with:
           name: dnio-gujarati-offline-v2-unsigned
