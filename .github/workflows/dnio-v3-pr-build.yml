@@ -1,0 +1,39 @@
+name: Temporary DNIO V3 PR Build
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "dnio-offline-shell/**"
+      - ".github/workflows/dnio-v3-pr-build.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dnio-offline-shell
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Build release and debug shells
+        run: gradle :app:assembleRelease :app:assembleDebug --no-daemon --stacktrace
+      - name: Validate shell assets and manifest
+        run: |
+          test -f app/src/main/assets/catalog.json
+          test -f app/src/main/assets/catalog.js
+          test -f app/src/main/assets/index.html
+          grep -q 'versionCode 3' app/build.gradle
+          grep -q 'applicationId "com.dnio.gujarati.offline"' app/build.gradle
+          grep -q 'videos/' app/src/main/java/com/dnio/gujarati/offline/PlayerActivity.java
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dnio-all-in-one-native-v3-unsigned
+          path: dnio-offline-shell/app/build/outputs/apk/release/app-release-unsigned.apk
+          if-no-files-found: error
