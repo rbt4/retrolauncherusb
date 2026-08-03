@@ -1,1 +1,2 @@
 Trigger Android emulator install-and-launch verification for DNIO Gujarati Offline v2.
+Retry 2: use Android SDK command-line tools from their installed full paths.
