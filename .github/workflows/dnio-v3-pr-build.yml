@@ -45,48 +45,31 @@ jobs:
           grep -q 'versionCode 3' app/build.gradle
           grep -q 'applicationId "com.dnio.gujarati.offline"' app/build.gradle
           grep -q 'videos/' app/src/main/java/com/dnio/gujarati/offline/PlayerActivity.java
-      - name: Prepare Android emulator
-        timeout-minutes: 6
+      - name: Enable KVM
         run: |
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
-            "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
-          ADB="$ANDROID_HOME/platform-tools/adb"
-          EMULATOR="$ANDROID_HOME/emulator/emulator"
-          test -x "$ADB"
-          test -x "$EMULATOR"
-          if [ -e /dev/kvm ]; then sudo chmod 666 /dev/kvm; fi
-          echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
-            -n dnio-v3-smoke -k "system-images;android-35;google_apis;x86_64" --force
-          nohup "$EMULATOR" -avd dnio-v3-smoke \
-            -no-window -no-audio -no-boot-anim -no-snapshot \
-            -gpu swiftshader_indirect -accel auto >/tmp/dnio-emulator.log 2>&1 &
-          EMULATOR_PID=$!
-          for i in $(seq 1 90); do
-            if ! kill -0 "$EMULATOR_PID" 2>/dev/null; then
-              cat /tmp/dnio-emulator.log
-              exit 1
-            fi
-            if "$ADB" get-state >/dev/null 2>&1 && \
-               [ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
-              exit 0
-            fi
-            sleep 2
-          done
-          cat /tmp/dnio-emulator.log
-          exit 1
+          if [ -e /dev/kvm ]; then
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
+          fi
       - name: Install and exercise native embedded playback
-        timeout-minutes: 2
-        run: |
-          ADB="$ANDROID_HOME/platform-tools/adb"
-          "$ADB" logcat -c
-          "$ADB" install -r app/build/outputs/apk/debug/app-debug.apk
-          "$ADB" shell am start -W -n com.dnio.gujarati.offline/.MainActivity \
-            --ez dnio_smoke_test true
-          sleep 12
-          "$ADB" shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
-          "$ADB" shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
-          ! "$ADB" logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -no-snapshot
+          script: |
+            cd dnio-offline-shell
+            adb logcat -c
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n com.dnio.gujarati.offline/.MainActivity --ez dnio_smoke_test true
+            sleep 12
+            adb shell dumpsys activity activities | grep -q 'com.dnio.gujarati.offline/.PlayerActivity'
+            adb shell run-as com.dnio.gujarati.offline test -s cache/dnio_playback/v001.mp4
+            ! adb logcat -d '*:E' | grep -q 'FATAL EXCEPTION.*com.dnio.gujarati.offline'
       - uses: actions/upload-artifact@v4
         with:
           name: dnio-all-in-one-native-v3-unsigned
