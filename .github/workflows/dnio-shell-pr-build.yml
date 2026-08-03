@@ -30,3 +30,14 @@ jobs:
           name: dnio-shell-apk
           path: dnio-offline-shell/app/build/outputs/apk/release/app-release-unsigned.apk
           if-no-files-found: error
+      - name: Collect official Android signing tool
+        run: |
+          TOOLS="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)"
+          mkdir -p signing-tools
+          cp "$TOOLS/lib/apksigner.jar" signing-tools/apksigner.jar
+          printf '%s\n' "$TOOLS" > signing-tools/build-tools-source.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apksigner
+          path: dnio-offline-shell/signing-tools/
+          if-no-files-found: error
