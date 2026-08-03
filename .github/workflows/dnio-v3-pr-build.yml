@@ -10,6 +10,7 @@ on:
 jobs:
   build-and-smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: dnio-offline-shell
@@ -45,24 +46,37 @@ jobs:
           grep -q 'applicationId "com.dnio.gujarati.offline"' app/build.gradle
           grep -q 'videos/' app/src/main/java/com/dnio/gujarati/offline/PlayerActivity.java
       - name: Prepare Android emulator
+        timeout-minutes: 6
         run: |
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
             "platform-tools" "emulator" "system-images;android-35;google_apis;x86_64"
           ADB="$ANDROID_HOME/platform-tools/adb"
+          EMULATOR="$ANDROID_HOME/emulator/emulator"
           test -x "$ADB"
+          test -x "$EMULATOR"
+          if [ -e /dev/kvm ]; then sudo chmod 666 /dev/kvm; fi
           echo no | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd \
             -n dnio-v3-smoke -k "system-images;android-35;google_apis;x86_64" --force
-          nohup "$ANDROID_HOME/emulator/emulator" -avd dnio-v3-smoke \
+          nohup "$EMULATOR" -avd dnio-v3-smoke \
             -no-window -no-audio -no-boot-anim -no-snapshot \
-            -gpu swiftshader_indirect >/tmp/dnio-emulator.log 2>&1 &
-          "$ADB" wait-for-device
-          for i in $(seq 1 120); do
-            [ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ] && break
+            -gpu swiftshader_indirect -accel auto >/tmp/dnio-emulator.log 2>&1 &
+          EMULATOR_PID=$!
+          for i in $(seq 1 90); do
+            if ! kill -0 "$EMULATOR_PID" 2>/dev/null; then
+              cat /tmp/dnio-emulator.log
+              exit 1
+            fi
+            if "$ADB" get-state >/dev/null 2>&1 && \
+               [ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = "1" ]; then
+              exit 0
+            fi
             sleep 2
           done
-          test "$("$ADB" shell getprop sys.boot_completed | tr -d '\r')" = "1"
+          cat /tmp/dnio-emulator.log
+          exit 1
       - name: Install and exercise native embedded playback
+        timeout-minutes: 2
         run: |
           ADB="$ANDROID_HOME/platform-tools/adb"
           "$ADB" logcat -c
