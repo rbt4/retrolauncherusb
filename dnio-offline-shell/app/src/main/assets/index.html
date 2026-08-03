@@ -1,1 +1,102 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DNIO Gujarati Offline</title><style>body{margin:0;background:#0a0e14;color:#eef3fa;font-family:system-ui;display:grid;place-items:center;min-height:100vh;text-align:center}.box{padding:28px}h1{font-size:26px}p{color:#aab6c6}</style></head><body><div class="box"><h1>DNIO Gujarati Offline</h1><p>Preparing your local Gujarati library…</p></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DNIO Gujarati Offline</title>
+<style>
+:root{color-scheme:dark;--bg:#091018;--panel:#111c28;--panel2:#172534;--line:#26394b;--text:#f5f8fc;--muted:#9fb0c1;--accent:#75b5ff;--good:#45ce8b;--edit:#f3bd55;--bad:#ef7180;--missing:#6d7b88}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}body{min-height:100vh}
+button,input{font:inherit}header{position:sticky;top:0;z-index:20;background:rgba(9,16,24,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:max(14px,env(safe-area-inset-top)) 15px 12px}
+.head{max-width:1100px;margin:auto}.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#6aaeff,#8d78ff);display:grid;place-items:center;font-weight:900;color:#07101b;font-size:19px}.title{font-size:20px;font-weight:850}.subtitle{font-size:12px;color:var(--muted)}
+.setup{max-width:1100px;margin:14px auto 0;border:1px solid var(--line);background:linear-gradient(135deg,#111d2a,#15283a);border-radius:16px;padding:13px}.setup.ok{border-color:rgba(69,206,139,.55)}.setup.warn{border-color:rgba(243,189,85,.55)}.setup-title{font-weight:850}.setup-detail{font-size:12px;color:var(--muted);margin-top:3px}.setup-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.setup button,.controls button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:9px 11px}.setup button.primary{background:var(--accent);border-color:transparent;color:#07101b;font-weight:850}.missing-list{font-size:11px;color:var(--muted);margin-top:9px;max-height:80px;overflow:auto;white-space:pre-wrap}
+.controls{display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:12px}input{width:100%;border:1px solid var(--line);background:#0b151f;color:var(--text);border-radius:12px;padding:11px 12px}.chips{display:flex;gap:6px;overflow:auto;padding:9px 0 1px}.chip{white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:7px 10px;border-radius:999px}.chip.active{background:var(--accent);color:#07101b;border-color:transparent;font-weight:800}
+main{max-width:1100px;margin:auto;padding:16px 14px 90px}.summary{color:var(--muted);margin:1px 2px 17px}.topic{margin:0 0 23px}.topic h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;justify-content:space-between}.topic h2 small{color:var(--muted);font-size:12px;font-weight:500}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px}
+.card{position:relative;border:1px solid var(--line);background:var(--panel);border-radius:15px;overflow:hidden;min-width:0;box-shadow:0 7px 24px rgba(0,0,0,.16)}.card.missing{opacity:.52;filter:saturate(.55)}.thumb{aspect-ratio:16/10;background:#081018;display:block;width:100%;object-fit:cover}.play{position:absolute;left:11px;top:80px;width:39px;height:39px;border-radius:50%;border:0;background:rgba(117,181,255,.94);color:#08111b;font-size:17px}.card.missing .play{background:var(--missing);font-size:13px}.body{padding:10px}.name{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{color:var(--muted);font-size:11px;margin-top:3px;display:flex;justify-content:space-between;gap:4px}.statusdot{width:8px;height:8px;border-radius:50%;display:inline-block;background:#526273;margin-right:5px}.status-Good{background:var(--good)}.status-Needs-Edit{background:var(--edit)}.status-Bad{background:var(--bad)}.empty{text-align:center;color:var(--muted);padding:60px 10px}
+@media(max-width:520px){.controls{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.play{top:auto;bottom:62px}.setup-actions button{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="head">
+    <div class="brand"><div class="logo">ગુ</div><div><div class="title">DNIO Gujarati Offline</div><div class="subtitle">Original MP4s • no login • no Internet</div></div></div>
+    <section class="setup" id="setup">
+      <div class="setup-title" id="setupTitle">Choose your Gujarati video folder</div>
+      <div class="setup-detail" id="setupDetail">Copy the 37 original MP4 files into one folder, then select that folder once.</div>
+      <div class="setup-actions"><button class="primary" id="choose">Choose video folder</button><button id="rescan">Rescan</button></div>
+      <div class="missing-list" id="missing"></div>
+    </section>
+    <div class="controls"><input id="search" placeholder="Search topics or filenames…" autocomplete="off"><button id="reset">Clear filters</button></div>
+    <div class="chips" id="filters"></div>
+  </div>
+</header>
+<main><div class="summary" id="summary"></div><div id="library"></div></main>
+<script src="catalog.js"></script>
+<script>
+'use strict';
+const C=window.DNIO_CATALOG||[];
+const $=s=>document.querySelector(s);
+const filters=['All','Lessons','Songs','Good','Needs Edit','Bad','Unreviewed','Missing'];
+let kind='All',review='All';
+let status={scanning:false,folderSelected:false,folderLabel:'',availableCount:0,totalCount:C.length,availableIds:[],missingIds:C.map(x=>x.id),missingNames:[],reviews:{},error:''};
+const availableSet=()=>new Set(status.availableIds||[]);
+const reviewFor=x=>(status.reviews&&status.reviews[x.id])||'Unreviewed';
+
+window.DNIO_applyStatus=function(next){
+  if(typeof next==='string'){try{next=JSON.parse(next)}catch(e){return}}
+  status=Object.assign(status,next||{});
+  renderSetup();renderFilters();render();
+};
+
+function nativeCall(name,arg){
+  try{
+    if(!window.DNIO||typeof window.DNIO[name]!=='function')throw new Error('Bridge unavailable');
+    return arg===undefined?window.DNIO[name]():window.DNIO[name](arg);
+  }catch(error){
+    alert('The Android connection is not ready. Close and reopen the app.');
+    return null;
+  }
+}
+function refresh(){
+  const raw=nativeCall('getStatus');
+  if(raw)window.DNIO_applyStatus(raw);
+}
+function renderSetup(){
+  const box=$('#setup'),title=$('#setupTitle'),detail=$('#setupDetail'),missing=$('#missing');
+  box.classList.remove('ok','warn');
+  if(status.scanning){
+    box.classList.add('warn');title.textContent='Scanning the selected folder…';detail.textContent='Checking original filenames. This should only take a moment.';missing.textContent='';return;
+  }
+  if(status.error){
+    box.classList.add('warn');title.textContent='Folder access needs attention';detail.textContent=status.error;missing.textContent='Choose the folder again.';return;
+  }
+  if(status.availableCount===status.totalCount&&status.totalCount>0){
+    box.classList.add('ok');title.textContent=`Ready — all ${status.totalCount} videos found`;detail.textContent=`Using “${status.folderLabel||'selected folder'}”. The app plays the original files directly without copying them.`;missing.textContent='';return;
+  }
+  if(status.folderSelected){
+    box.classList.add('warn');title.textContent=`${status.availableCount} of ${status.totalCount} videos found`;detail.textContent=`Using “${status.folderLabel||'selected folder'}”. Add the missing originals and tap Rescan.`;missing.textContent=(status.missingNames||[]).slice(0,12).join('\n')+((status.missingNames||[]).length>12?`\n…and ${(status.missingNames||[]).length-12} more`:'');return;
+  }
+  title.textContent='Choose your Gujarati video folder';detail.textContent='Copy the 37 original MP4 files into one folder, then select that folder once.';missing.textContent='The folder can be on internal storage or an SD card.';
+}
+function renderFilters(){
+  const box=$('#filters');box.innerHTML='';
+  filters.forEach(f=>{const b=document.createElement('button');const active=(['All','Lessons','Songs'].includes(f)?kind:review)===f;b.className='chip '+(active?'active':'');b.textContent=f;b.onclick=()=>{if(['All','Lessons','Songs'].includes(f)){kind=f;review='All'}else{review=f;kind='All'}renderFilters();render()};box.appendChild(b)});
+}
+function match(x){
+  const q=$('#search').value.trim().toLowerCase();if(q&&!`${x.title} ${x.topic} ${x.filename}`.toLowerCase().includes(q))return false;
+  if(kind==='Lessons'&&x.kind!=='Lesson')return false;if(kind==='Songs'&&x.kind!=='Song')return false;
+  const r=reviewFor(x);if(review==='Missing'&&!(status.missingIds||[]).includes(x.id))return false;if(!['All','Missing'].includes(review)&&r!==review)return false;
+  return true;
+}
+function render(){
+  const found=availableSet();const visible=C.filter(match);const groups={};visible.forEach(x=>(groups[x.topic]??=[]).push(x));
+  $('#summary').textContent=`Showing ${visible.length} of ${C.length} videos • ${status.availableCount||0} available`;
+  const root=$('#library');root.innerHTML='';
+  Object.entries(groups).forEach(([topic,items])=>{const sec=document.createElement('section');sec.className='topic';sec.innerHTML=`<h2>${topic}<small>${items.length} video${items.length===1?'':'s'}</small></h2><div class="grid"></div>`;const grid=sec.querySelector('.grid');items.forEach(x=>{const r=reviewFor(x),ok=found.has(x.id);const card=document.createElement('article');card.className='card '+(ok?'':'missing');card.innerHTML=`<img class="thumb" src="thumbs/${x.thumb_file}" alt=""><button class="play">${ok?'▶':'Missing'}</button><div class="body"><div class="name">${x.title}</div><div class="meta"><span><i class="statusdot status-${r.replace(/ /g,'-')}"></i>${ok?r:'Missing file'}</span><span>${x.duration_label}</span></div></div>`;card.onclick=()=>{if(!ok){alert(`Missing file:\n${x.filename}\n\nAdd it to the selected folder and tap Rescan.`);return}nativeCall('play',x.id)};grid.appendChild(card)});root.appendChild(sec)});
+  if(!visible.length)root.innerHTML='<div class="empty">No videos match this filter.</div>';
+}
+$('#choose').onclick=()=>nativeCall('chooseFolder');$('#rescan').onclick=()=>nativeCall('rescan');$('#search').oninput=render;$('#reset').onclick=()=>{kind='All';review='All';$('#search').value='';renderFilters();render()};
+renderSetup();renderFilters();render();setTimeout(refresh,250);
+</script>
+</body>
+</html>
