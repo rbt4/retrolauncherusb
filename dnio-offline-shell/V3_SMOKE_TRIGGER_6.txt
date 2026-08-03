@@ -1,0 +1,1 @@
+Run the Android 15 install and embedded playback test with the corrected APK path.
