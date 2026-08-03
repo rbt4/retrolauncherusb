@@ -1,0 +1,1 @@
+Run the native embedded-video emulator smoke test.
